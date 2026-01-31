@@ -3,6 +3,7 @@
 import Banner from '../components/Banner'
 
 import me from "@/public/me.png"
+import manNew from "@/public/manNew.png"
 import Image from 'next/image'
 import { Star } from '@/ui/Icons'
 import { useEffect, useState } from 'react'
@@ -44,6 +45,84 @@ const rawData = [
     id: "cse45798437945",
     score: 34.6
   },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
+  {
+    name: "Tom",
+    email: "tom@gmail.com",
+    id: "cse45798437945",
+    score: 34.6
+  },
 ]
 
 export default function page() {
@@ -63,44 +142,50 @@ export default function page() {
 
         {/* FOR 3 PERSON */}
         <div className='flex items-center justify-center'>
-          <div className='flex gap-x-5'>
+          <div className='flex gap-x-10'>
 
             <div className='relative top-20'>
-              <div className='flex justify-center'>
-                <div className='flex gap-x-2'>
-                  <Star w={40}></Star>
-                  <Star w={40}></Star>
+              <div className='h-55 w-35 bg-linear-to-t from-[#0874f0] to-black rounded-md border-2 border-white relative overflow-hidden'>
+                <div className='absolute top-2 w-full'>
+                  <div className='flex justify-center gap-x-2'>
+                    <div><Star w={40}></Star></div>
+                    <div><Star w={40}></Star></div>
+                  </div>
                 </div>
+                <Image className='h-35 w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
               </div>
-              <Image className='h-35 w-35 object-cover rounded-full border-8 border-white' src={me} height={1000} width={1000} alt='me'></Image>
-              <h1 className='text-center'>{data[1].name} (2nd)</h1>
-              <h1 className='text-center'>Score: {data[1].score}</h1>
+              <h1 className='text-center text-white'>{data[1].name} (2nd)</h1>
+              <h1 className='text-center text-white'>Score: {data[1].score}</h1>
             </div>
 
 
             <div>
-              <div className='flex justify-center'>
-                <div className='flex gap-x-2'>
-                  <div className='relative top-2'><Star w={40}></Star></div>
-                  <div className='relative -top-2'><Star w={40}></Star></div>
-                  <div className='relative top-2'><Star w={40}></Star></div>
+              <div className='h-55 w-35 bg-linear-to-t from-[#f0ba08] to-black rounded-md border-2 border-white relative overflow-hidden'>
+                <div className='absolute top-2'>
+                  <div className='flex gap-x-2'>
+                    <div className='relative top-2'><Star w={40}></Star></div>
+                    <div className='relative -top-2'><Star w={40}></Star></div>
+                    <div className='relative top-2'><Star w={40}></Star></div>
+                  </div>
                 </div>
+                <Image className='h-35 w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
               </div>
-              <Image className='h-35 w-35 object-cover rounded-full border-8 border-white' src={me} height={1000} width={1000} alt='me'></Image>
-              <h1 className='text-center'>{data[0].name} (1st)</h1>
-              <h1 className='text-center'>Score: {data[0].score}</h1>
+              <h1 className='text-center text-white'>{data[0].name} (1st)</h1>
+              <h1 className='text-center text-white'>Score: {data[0].score}</h1>
             </div>
 
 
             <div className='relative top-20'>
-              <div className='flex justify-center'>
-                <div className='flex gap-x-2'>
-                  <Star w={40}></Star>
+              <div className='h-55 w-35 bg-linear-to-t from-[#f008f0] to-black rounded-md border-2 border-white relative overflow-hidden'>
+                <div className='absolute top-2 w-full'>
+                  <div className='flex justify-center'>
+                    <div><Star w={40}></Star></div>
+                  </div>
                 </div>
+                <Image className='h-35 w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
               </div>
-              <Image className='h-35 w-35 object-cover rounded-full  border-8 border-white' src={me} height={1000} width={1000} alt='me'></Image>
-              <h1 className='text-center'>{data[2].name} (3rd)</h1>
-              <h1 className='text-center'>Score: {data[2].score}</h1>
+              <h1 className='text-center text-white'>{data[2].name} (3rd)</h1>
+              <h1 className='text-center text-white'>Score: {data[2].score}</h1>
             </div>
 
           </div>
@@ -110,16 +195,35 @@ export default function page() {
 
         {/* FOR OTHERS PERSON */}
         <section className='mt-40'>
-          {
-            data.slice(4).map((score: any, idx: any) => {
-              return (
-                <div className='mt-5' key={idx + 4}>
-                  <h1>{score.name}</h1>
-                  <h1>Score: {score.score}</h1>
-                </div>
-              )
-            })
-          }
+
+          <div className="overflow-x-auto">
+            <table className="table table-zebra w-full">
+              {/* head */}
+              <thead className='border-white border text-white'>
+                <tr>
+                  <th>Position</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  data.slice(4).map((score: any, idx: any) => {
+                    return (
+                      <tr className='text-white py-5 text-center' key={idx}>
+                        <td>{idx + 4}</td>
+                        <td>NO Image</td>
+                        <td>{score.name}</td>
+                        <td>{score.score}</td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+          </div>
+
         </section>
       </div>
     </div>

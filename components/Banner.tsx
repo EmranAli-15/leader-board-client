@@ -5,7 +5,7 @@ import Image from 'next/image'
 export default function Banner() {
   return (
     <div className='bg-black'>
-          <Image className='h-75 object-cover opacity-35' alt='banner image' src={leader_board} height={300} width={3000}></Image>
+          <Image className='h-100 object-cover opacity-35' alt='banner image' src={leader_board} height={300} width={3000}></Image>
     </div>
   )
 }
