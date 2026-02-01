@@ -138,54 +138,60 @@ export default function page() {
     <div>
       <Banner></Banner>
 
-      <div className='max-w-7xl mx-auto relative -mt-40'>
+      <div className='max-w-7xl mx-auto relative -mt-40 mainbg'>
 
         {/* FOR 3 PERSON */}
-        <div className='flex items-center justify-center'>
-          <div className='flex gap-x-10'>
+        <div className='flex justify-center'>
+          <div className='flex gap-x-5 md:gap-x-10'>
 
             <div className='relative top-20'>
-              <div className='h-55 w-35 bg-linear-to-t from-[#0874f0] to-black rounded-md border-2 border-white relative overflow-hidden'>
+              <div className='h-35 w-20 md:h-55 md:w-35 bg-linear-to-t from-[#0874f0] to-black rounded-md border-2 border-white relative overflow-hidden'>
                 <div className='absolute top-2 w-full'>
                   <div className='flex justify-center gap-x-2'>
-                    <div><Star w={40}></Star></div>
-                    <div><Star w={40}></Star></div>
+                    {/* <div><Star w={40}></Star></div>
+                    <div><Star w={40}></Star></div> */}
                   </div>
                 </div>
-                <Image className='h-35 w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
+                <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
               </div>
-              <h1 className='text-center text-white'>{data[1].name} (2nd)</h1>
-              <h1 className='text-center text-white'>Score: {data[1].score}</h1>
+              <div className='w-20 md:w-35'>
+                <h1 className='text-center text-white'>{data[1].name} (2nd)</h1>
+                <h1 className='text-center text-white'>Score: {data[1].score}</h1>
+              </div>
             </div>
 
 
             <div>
-              <div className='h-55 w-35 bg-linear-to-t from-[#f0ba08] to-black rounded-md border-2 border-white relative overflow-hidden'>
+              <div className='h-35 w-20 md:h-55 md:w-35 bg-linear-to-t from-[#f0ba08] to-black rounded-md border-2 border-white relative overflow-hidden'>
                 <div className='absolute top-2'>
                   <div className='flex gap-x-2'>
-                    <div className='relative top-2'><Star w={40}></Star></div>
+                    {/* <div className='relative top-2'><Star w={40}></Star></div>
                     <div className='relative -top-2'><Star w={40}></Star></div>
-                    <div className='relative top-2'><Star w={40}></Star></div>
+                    <div className='relative top-2'><Star w={40}></Star></div> */}
                   </div>
                 </div>
-                <Image className='h-35 w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
+                <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={500} width={500} alt='me'></Image>
               </div>
-              <h1 className='text-center text-white'>{data[0].name} (1st)</h1>
-              <h1 className='text-center text-white'>Score: {data[0].score}</h1>
+              <div className='w-20 md:w-35'>
+                <h1 className='text-center text-white'>{data[0].name} (1st)</h1>
+                <h1 className='text-center text-white'>Score: {data[0].score}</h1>
+              </div>
             </div>
 
 
             <div className='relative top-20'>
-              <div className='h-55 w-35 bg-linear-to-t from-[#f008f0] to-black rounded-md border-2 border-white relative overflow-hidden'>
+              <div className='h-35 w-20 md:h-55 md:w-35 bg-linear-to-t from-[#f008f0] to-black rounded-md border-2 border-white relative overflow-hidden'>
                 <div className='absolute top-2 w-full'>
                   <div className='flex justify-center'>
-                    <div><Star w={40}></Star></div>
+                    {/* <div><Star w={40}></Star></div> */}
                   </div>
                 </div>
-                <Image className='h-35 w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
+                <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
               </div>
-              <h1 className='text-center text-white'>{data[2].name} (3rd)</h1>
-              <h1 className='text-center text-white'>Score: {data[2].score}</h1>
+              <div className='w-20 md:w-35'>
+                <h1 className='text-center text-white'>{data[2].name} (3rd)</h1>
+                <h1 className='text-center text-white'>Score: {data[2].score}</h1>
+              </div>
             </div>
 
           </div>
@@ -211,8 +217,8 @@ export default function page() {
                 {
                   data.slice(4).map((score: any, idx: any) => {
                     return (
-                      <tr className='text-white py-5 text-center' key={idx}>
-                        <td>{idx + 4}</td>
+                      <tr className={`${idx % 2 == 0 ? "bg-[#00960c34]" : ""} text-white text-center border`} key={idx}>
+                        <td className='py-4'>{idx + 4}</td>
                         <td>NO Image</td>
                         <td>{score.name}</td>
                         <td>{score.score}</td>

@@ -7,7 +7,13 @@ body {
   background-color: black;
 }
 
-body::before {
+body {
+  font-family: var(--font-jetbrains-mono), monospace;
+   font-weight: 300;
+}
+
+
+.mainbg::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -18,7 +24,5 @@ body::before {
   background-repeat: no-repeat;
 
   opacity: 0.5;
-  /* adjust this value */
   z-index: -1;
-  /* keeps content on top */
 }
