@@ -4,8 +4,12 @@ import Image from 'next/image'
 
 export default function Banner() {
   return (
-    <div className='bg-black'>
-          <Image className='h-100 object-cover opacity-35' alt='banner image' src={leader_board} height={3000} width={3000}></Image>
+    <div className='bg-black relative'>
+          <Image className='h-80 md:h-100 w-full object-cover opacity-35' alt='banner image' src={leader_board} height={1000} width={1000}></Image>
+
+          <div className='w-full flex justify-center'>
+            <h1 className='text-green-700 font-extrabold p-1 bg-[#9e0f0fb7] animate-pulse absolute top-10'>Let's Code Your Journey ...</h1>
+          </div>
     </div>
   )
 }

@@ -22,7 +22,7 @@ const rawData = [
     score: 32.2
   },
   {
-    name: "bob",
+    name: "Bob",
     email: "bob@gmail.com",
     id: "cse45798437945",
     score: 38.6
@@ -155,8 +155,8 @@ export default function page() {
                 <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
               </div>
               <div className='w-20 md:w-35'>
-                <h1 className='text-center text-white'>{data[1].name} (2nd)</h1>
-                <h1 className='text-center text-white'>Score: {data[1].score}</h1>
+                <h1 className='text-center text-white'>{data[1].name}</h1>
+                <h1 className='text-center text-white text-xs'>(2nd) <br /> Score: {data[1].score}</h1>
               </div>
             </div>
 
@@ -173,8 +173,8 @@ export default function page() {
                 <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={500} width={500} alt='me'></Image>
               </div>
               <div className='w-20 md:w-35'>
-                <h1 className='text-center text-white'>{data[0].name} (1st)</h1>
-                <h1 className='text-center text-white'>Score: {data[0].score}</h1>
+                <h1 className='text-center text-white'>{data[0].name}</h1>
+                <h1 className='text-center text-white text-xs'>(1st) <br /> Score: {data[0].score}</h1>
               </div>
             </div>
 
@@ -189,8 +189,8 @@ export default function page() {
                 <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={1000} width={1000} alt='me'></Image>
               </div>
               <div className='w-20 md:w-35'>
-                <h1 className='text-center text-white'>{data[2].name} (3rd)</h1>
-                <h1 className='text-center text-white'>Score: {data[2].score}</h1>
+                <h1 className='text-center text-white'>{data[2].name}</h1>
+                <h1 className='text-center text-white text-xs'>(3rd) <br /> Score: {data[2].score}</h1>
               </div>
             </div>
 
