@@ -1,128 +1,43 @@
 "use client"
 
 import Banner from '../components/Banner'
-
-import me from "@/public/me.png"
 import manNew from "@/public/manNew.png"
 import Image from 'next/image'
-import { Star } from '@/ui/Icons'
 import { useEffect, useState } from 'react'
 
 const rawData = [
   {
-    name: "John Doe",
-    email: "john@gmail.com",
-    id: "cse45798437945",
+    name: "Asif Karim Ornob",
+    email: "ornobasifkarim@gmail.com",
+    id: "CSE2401031169",
+    phone: "01906428465",
+    section: "31M1",
     score: 34.6
   },
   {
-    name: "Alice",
-    email: "alice@gmail.com",
-    id: "cse45798437945",
-    score: 32.2
+    name: "Ashraful Haque",
+    email: "ashrafulhaque1004@gmail.com",
+    id: "CSE2401031137",
+    phone: "01635-047881",
+    section: "31M1",
+    score: 34.6
   },
   {
-    name: "Bob",
-    email: "bob@gmail.com",
-    id: "cse45798437945",
+    name: "Pranto Paul",
+    email: "paulpranto413@gmail.com",
+    id: "CSE2401031089",
+    phone: "01616377899",
+    section: "31M1",
     score: 38.6
   },
   {
-    name: "Alex",
-    email: "alex@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Alexender",
-    email: "alexender@gmail.com",
-    id: "cse45798437945",
-    score: 30.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
-  {
-    name: "Tom",
-    email: "tom@gmail.com",
-    id: "cse45798437945",
-    score: 34.6
-  },
+    name: "Md Rafiul Hasan Rifat ",
+    email: "rafiulhasanrifat2002@gmail",
+    id: "CSE2401031096",
+    phone: "01606090890",
+    section: "31M1",
+    score: 38.6
+  }
 ]
 
 export default function page() {
@@ -215,7 +130,7 @@ export default function page() {
               </thead>
               <tbody>
                 {
-                  data.slice(4).map((score: any, idx: any) => {
+                  data.slice(3).map((score: any, idx: any) => {
                     return (
                       <tr className={`${idx % 2 == 0 ? "bg-[#00960c34]" : ""} text-white text-center border`} key={idx}>
                         <td className='py-4'>{idx + 4}</td>
