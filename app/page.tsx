@@ -31,13 +31,29 @@ const rawData = [
     score: 38.6
   },
   {
-    name: "Md Rafiul Hasan Rifat ",
+    name: "Md Rafiul Hasan Rifat",
     email: "rafiulhasanrifat2002@gmail",
     id: "CSE2401031096",
     phone: "01606090890",
     section: "31M1",
     score: 38.6
-  }
+  },
+  {
+    name: "Ashra Siddiqa Yeantun",
+    email: "ayeantun@gmail.com",
+    id: "CSE2401031182",
+    phone: "01590084318",
+    section: "31M1",
+    score: 38.6
+  },
+  {
+    name: "Md.khalequzzaman",
+    email: "khalequzzaman26@gmail.com",
+    id: "CSE2401031091",
+    phone: "01618225641",
+    section: "31M1",
+    score: 38.6
+  },
 ]
 
 export default function page() {
