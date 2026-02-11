@@ -4,126 +4,23 @@ import Footer from '@/components/Footer'
 import Banner from '../components/Banner'
 import manNew from "@/public/manNew.png"
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
-
-const rawData = [
-  {
-    name: "Md Rafiul Hasan Rifat",
-    email: "rafiulhasanrifat2002@gmail",
-    photo: "https://i.ibb.co/x8GSmR5m/rifat1.png",
-    id: "CSE2401031096",
-    phone: "01606090890",
-    section: "31M1",
-    score: 75
-  },
-  {
-    name: "Asif Karim Ornob",
-    email: "ornobasifkarim@gmail.com",
-    photo: "https://i.ibb.co/fVDNjrQ4/ornob1.jpg",
-    id: "CSE2401031169",
-    phone: "01906428465",
-    section: "31M1",
-    score: 25
-  },
-  {
-    name: "Atkia Nawar Anisha",
-    email: "atkianawaranisha@gmail.com",
-    photo: "https://i.ibb.co/LXMMKRfP/anisha2.jpg",
-    id: "CSE2401031093",
-    phone: "01755380844",
-    section: "31M1",
-    score: 71
-  },
-  {
-    name: "Ashraful Haque",
-    email: "ashrafulhaque1004@gmail.com",
-    photo: "https://i.ibb.co/qFnnK3Fj/ashraful1.jpg",
-    id: "CSE2401031137",
-    phone: "01635-047881",
-    section: "31M1",
-    score: 66
-  },
-  {
-    name: "Pranto Paul",
-    email: "paulpranto413@gmail.com",
-    photo: "https://i.ibb.co/VYBHL0Wc/pranto1.png",
-    id: "CSE2401031089",
-    phone: "01616377899",
-    section: "31M1",
-    score: 25
-  },
-  {
-    name: "Ashra Siddiqa Yeantun",
-    email: "ayeantun@gmail.com",
-    photo: "https://i.ibb.co/SDJP7qFb/ashra1.jpg",
-    id: "CSE2401031182",
-    phone: "01590084318",
-    section: "31M1",
-    score: 60
-  },
-  {
-    name: "Nabil",
-    email: "khalequzzaman26@gmail.com",
-    photo: "https://i.ibb.co/20kNWkb2/khalequzzaman1.png",
-    id: "CSE2401031091",
-    phone: "01618225641",
-    section: "31M1",
-    score: 86
-  },
-  {
-    name: "Bushra Binte Reza",
-    email: "bbushu8@gmail.com",
-    photo: "https://i.ibb.co/z1LCG0R/bushra1.jpg",
-    id: "CSE2401031001",
-    phone: "01756590241",
-    section: "31M1",
-    score: 75
-  },
-  {
-    name: "Sumaya Akter Rini",
-    email: "sumayarahman165@gmail.com",
-    photo: "https://i.ibb.co/VWvPBc5F/rini1.jpg",
-    id: "CSE2203027042",
-    phone: "01835531291",
-    section: "31M1",
-    score: 10
-  },
-
-]
+import Link from 'next/link'
+import { useMyFetch } from '@/utils/myFetch'
 
 export default function page() {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<any>([]);
 
 
-  async function getData() {
-    const url = 'https://leader-board-server-omega.vercel.app/api/getAllTotalScore'; // Placeholder URL
-
-    try {
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setData(data.data);
-      console.log(data)
-      setLoading(false);
-    } catch (error) {
-
-    }
-  }
+  const {data, loading} = useMyFetch({
+    url: '/getAllTotalScore',
+    headers: null
+  })
 
 
-
-  useEffect(() => {
-    getData()
-  }, [])
 
   return (
     <div>
       <Banner></Banner>
+      <Link href="/about" className='text-white text-5xl'>About</Link>
 
       <div className='max-w-7xl mx-auto relative -mt-40 mainbg'>
 
