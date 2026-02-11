@@ -1,5 +1,6 @@
 import { useCacheContext } from "@/contextApi/CacheContext";
 import { useEffect, useState } from "react";
+import { baseUrl } from "./baseUrl";
 
 export const useMyFetch = ({ url, headers }: { url: string; headers?: any }) => {
     const { cached, setCached } = useCacheContext();
@@ -17,7 +18,7 @@ export const useMyFetch = ({ url, headers }: { url: string; headers?: any }) => 
             }
 
             try {
-                const fullUrl = `https://leader-board-server-omega.vercel.app/api${url}`
+                const fullUrl = `${baseUrl}${url}`
                 const response = await fetch(fullUrl);
                 console.log("called")
 
