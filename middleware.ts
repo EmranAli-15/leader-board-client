@@ -12,11 +12,14 @@ export function middleware(request: NextRequest) {
     if (token && authRoutes.includes(pathname)) {
         return NextResponse.redirect(new URL("/", request.url))
     }
+    else if (!token && privetRoutes.includes(pathname)) {
+        return NextResponse.redirect(new URL("/", request.url))
+    }
 
     return NextResponse.next();
 }
 
 // Optionally, define a matcher to run middleware only on specific paths
 export const config = {
-    matcher: ['/about', '/login'],
+    matcher: ['/profile', '/login'],
 };

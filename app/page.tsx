@@ -10,7 +10,7 @@ import { useMyFetch } from '@/utils/myFetch'
 export default function page() {
 
 
-  const {data, loading} = useMyFetch({
+  const { data, loading, error } = useMyFetch({
     url: '/getAllTotalScore',
     headers: null
   })
@@ -20,12 +20,11 @@ export default function page() {
   return (
     <div>
       <Banner></Banner>
-      <Link href="/about" className='text-white text-5xl'>About</Link>
 
       <div className='max-w-7xl mx-auto relative -mt-40 mainbg'>
 
         {
-          !loading && <>
+          !loading && !error && <>
             {/* FOR 3 PERSON */}
             <div className='flex justify-center'>
               <div className='flex gap-x-5 md:gap-x-10'>

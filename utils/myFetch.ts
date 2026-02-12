@@ -2,14 +2,22 @@ import { useCacheContext } from "@/contextApi/CacheContext";
 import { useEffect, useState } from "react";
 import { baseUrl } from "./baseUrl";
 
-export const useMyFetch = ({ url, headers }: { url: string; headers?: any }) => {
+export const useMyFetch = ({ url, headers, wait = false }: { url: string; headers?: any, wait?: boolean }) => {
+
     const { cached, setCached } = useCacheContext();
     const cachedData = cached[url];
 
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<any>(null);
+    const [error, setError] = useState(null);
+
+
 
     useEffect(() => {
+
+        if (wait) return;
+
+
         const fetchData = async () => {
             if (cachedData) {
                 setData(cachedData);
@@ -20,28 +28,28 @@ export const useMyFetch = ({ url, headers }: { url: string; headers?: any }) => 
             try {
                 const fullUrl = `${baseUrl}${url}`
                 const response = await fetch(fullUrl);
-                console.log("called")
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
 
                 const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message);
+                }
+
                 setCached((prev: any) => ({
                     ...prev,
                     [url]: result.data
                 }));
 
                 setData(result.data);
-            } catch (error) {
-                console.error(error);
+            } catch (error: any) {
+                setError(error.message)
             } finally {
                 setLoading(false);
             }
         };
 
         fetchData();
-    }, [url, cachedData, headers, setCached]);
+    }, [url]);
 
-    return { data, loading };
+    return { data, loading, error };
 };

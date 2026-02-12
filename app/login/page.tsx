@@ -4,9 +4,11 @@ import Link from 'next/link';
 import Cookies from 'js-cookie'
 import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation';
+import { useAuthContext } from '@/contextApi/AuthContext';
 
 export default function LoginPage() {
-    const router = useRouter()
+    const router = useRouter();
+    const {setLoading} = useAuthContext();
 
     const [email, setEmail] = useState("emran@gmail.com");
     const [password, setPassword] = useState("123456");
@@ -32,6 +34,7 @@ export default function LoginPage() {
             }
 
             Cookies.set('auth', result.data);
+            setLoading(true);
             router.push("/");
 
         } catch (error: any) {
