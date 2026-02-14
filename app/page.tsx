@@ -5,6 +5,7 @@ import Banner from '../components/Banner'
 import manNew from "@/public/manNew.png"
 import Image from 'next/image'
 import { useHelixQuery } from '@/utils/helixFetch'
+import Link from 'next/link'
 
 export default function page() {
 
@@ -41,7 +42,7 @@ export default function page() {
                     }
                   </div>
                   <div className='w-20 md:w-35'>
-                    <h1 className='text-center text-white'>{data[1].name}</h1>
+                    <h1 className='text-center text-white'><Link href={`/user/${data[1].userId}`}>{data[1].name}</Link></h1>
                     <h1 className='text-center text-white text-xs'>(2nd) <br /> Score: {data[1].totalScore}</h1>
                   </div>
                 </div>
@@ -62,7 +63,7 @@ export default function page() {
                     }
                   </div>
                   <div className='w-20 md:w-35'>
-                    <h1 className='text-center text-white'>{data[0].name}</h1>
+                    <h1 className='text-center text-white'><Link href={`/user/${data[0].userId}`}>{data[0].name}</Link></h1>
                     <h1 className='text-center text-white text-xs'>(1st) <br /> Score: {data[0].totalScore}</h1>
                   </div>
                 </div>
@@ -81,7 +82,7 @@ export default function page() {
                     }
                   </div>
                   <div className='w-20 md:w-35'>
-                    <h1 className='text-center text-white'>{data[2].name}</h1>
+                    <h1 className='text-center text-white'><Link href={`/user/${data[2].userId}`}>{data[2].name}</Link></h1>
                     <h1 className='text-center text-white text-xs'>(3rd) <br /> Score: {data[2].totalScore}</h1>
                   </div>
                 </div>
@@ -117,7 +118,7 @@ export default function page() {
                             score.photo ? <Image className='object-contain h-20 w-20' height={100} width={100} alt={score.name} src={score.photo}></Image> : "No Image"
                           }
                         </td>
-                        <td className="px-6">{score.name}</td>
+                        <td className="px-6"><Link href={`/user/${score.userId}`}>{score.name}</Link></td>
                         <td className="px-6">{score.totalScore}</td>
                       </tr>
                     ))}
