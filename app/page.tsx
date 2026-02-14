@@ -4,15 +4,13 @@ import Footer from '@/components/Footer'
 import Banner from '../components/Banner'
 import manNew from "@/public/manNew.png"
 import Image from 'next/image'
-import Link from 'next/link'
-import { useMyFetch } from '@/utils/myFetch'
+import { useHelixQuery } from '@/utils/helixFetch'
 
 export default function page() {
 
 
-  const { data, loading, error } = useMyFetch({
+  const { data, loading, error } = useHelixQuery({
     url: '/getAllTotalScore',
-    headers: null
   })
 
 

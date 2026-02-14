@@ -10,7 +10,7 @@ export default function LoginPage() {
     const router = useRouter();
     const {setLoading} = useAuthContext();
 
-    const [email, setEmail] = useState("emran@gmail.com");
+    const [email, setEmail] = useState("rafiulhasanrifat2002@gmail");
     const [password, setPassword] = useState("123456");
 
 

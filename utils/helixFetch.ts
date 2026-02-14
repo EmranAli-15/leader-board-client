@@ -2,7 +2,7 @@ import { useCacheContext } from "@/contextApi/CacheContext";
 import { useEffect, useState } from "react";
 import { baseUrl } from "./baseUrl";
 
-export const useMyFetch = ({ url, headers, wait = false }: { url: string; headers?: any, wait?: boolean }) => {
+export const useHelixQuery = ({ url, wait = false }: { url: string; wait?: boolean }) => {
 
     const { cached, setCached } = useCacheContext();
     const cachedData = cached[url];
