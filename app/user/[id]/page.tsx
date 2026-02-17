@@ -1,7 +1,7 @@
 "use client"
 
 import { useAuthContext } from "@/contextApi/AuthContext";
-import { Back, LogOut, User } from "@/ui/Icons";
+import { BackIcon, LogOutIcon, UserIcon } from "@/ui/Icons";
 import { useHelixQuery } from "@/utils/helixFetch";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,7 +53,7 @@ export default function Page({
       <div className='flex justify-between bg-[#15db2559] p-2'>
         <Link href="/">
           <div className='flex gap-1 items-center text-white'>
-            <Back w={30}></Back>
+            <BackIcon w={30}></BackIcon>
             <p className='text-[16px]'>Home</p>
           </div>
         </Link>
@@ -69,7 +69,7 @@ export default function Page({
                   {
                     userData.photo ? <Image className='h-30 w-30 md:h-40 md:w-40 border-2 border-white rounded-full object-contain' src={userData.photo} alt={userData.name} width={200} height={200}></Image> :
                       <div className='h-40 w-40 border-2 border-white rounded-full'>
-                        <User w={160}></User>
+                        <UserIcon w={160}></UserIcon>
                       </div>
                   }
                   <div>

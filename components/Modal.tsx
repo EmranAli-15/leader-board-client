@@ -1,0 +1,23 @@
+import React, { ReactNode } from 'react'
+
+export default function Modal({ modal, setModal, children }: { modal: boolean, setModal: any, children: ReactNode }) {
+
+
+
+    return (
+        <>
+            {
+                modal && <div>
+                    <div onClick={() => setModal(false)} className='absolute w-full h-full bg-black/70 z-99'>
+                        {/* dummy dummy dummy */}
+                    </div>
+                    <div
+                        className='absolute z-999 top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] p-10 bg-white rounded-lg text-black'
+                    >
+                        {children}
+                    </div>
+                </div>
+            }
+        </>
+    )
+}

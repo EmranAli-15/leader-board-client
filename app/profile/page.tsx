@@ -6,11 +6,14 @@ import { useAuthContext } from '@/contextApi/AuthContext'
 import { useRouter } from 'next/navigation'
 import { useHelixQuery } from '@/utils/helixFetch'
 import Image from 'next/image'
-import { Back, LogOut, User } from '@/ui/Icons'
+import { BackIcon, EditIcon, LogOutIcon, UserIcon } from '@/ui/Icons'
 import { useEffect, useState } from 'react'
+import Modal from '@/components/Modal'
 
 export default function AboutPage() {
   const router = useRouter();
+
+  const [modal, setModal] = useState(false);
 
 
   const { setLoading, user } = useAuthContext();
@@ -44,17 +47,25 @@ export default function AboutPage() {
   return (
     <div className='w-full min-h-screen mainbg'>
 
+      {
+        modal && <Modal modal={modal} setModal={setModal}>
+          <div>
+            This is my modal
+          </div>
+        </Modal>
+      }
+
       <div className='flex justify-between bg-[#15db2559] p-2'>
         <Link href="/">
           <div className='flex gap-1 items-center text-white'>
-            <Back w={30}></Back>
+            <BackIcon w={30}></BackIcon>
             <p className='text-[16px]'>Home</p>
           </div>
         </Link>
         <button onClick={handleLogOut} className='text-2xl text-white cursor-pointer'>
           <div className='flex gap-1 items-center'>
             <p className='text-[16px]'>Log out</p>
-            <LogOut w={30}></LogOut>
+            <LogOutIcon w={30}></LogOutIcon>
           </div>
         </button>
       </div>
@@ -66,12 +77,19 @@ export default function AboutPage() {
 
               <div className='md:flex justify-between'>
                 <div className='flex gap-x-2'>
-                  {
-                    userData.photo ? <Image className='h-30 w-30 md:h-40 md:w-40 border-2 border-white rounded-full object-contain' src={userData.photo} alt={userData.name} width={200} height={200}></Image> :
-                      <div className='h-40 w-40 border-2 border-white rounded-full'>
-                        <User w={160}></User>
-                      </div>
-                  }
+                  <div className='relative'>
+                    {
+                      userData.photo ? <Image className='h-30 w-30 md:h-40 md:w-40 border-2 border-white rounded-full object-contain' src={userData.photo} alt={userData.name} width={200} height={200}></Image> :
+                        <div className='h-40 w-40 border-2 border-white rounded-full'>
+                          <UserIcon w={160}></UserIcon>
+                        </div>
+                    }
+                    <div className='absolute bottom-0 left-[80%] cursor-pointer'>
+                      <button onClick={() => setModal(!modal)}>
+                        <EditIcon w={30}></EditIcon>
+                      </button>
+                    </div>
+                  </div>
                   <div>
                     <h1 className='text-[16px] md:text-xl mb-2'>{userData.name}</h1>
                     <p className='text-[14px] md:text-[16px]'>{userData.id}</p>
