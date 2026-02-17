@@ -6,7 +6,7 @@ import { useAuthContext } from '@/contextApi/AuthContext'
 import { useRouter } from 'next/navigation'
 import { useHelixQuery } from '@/utils/helixFetch'
 import Image from 'next/image'
-import { BackIcon, EditIcon, LogOutIcon, UserIcon } from '@/ui/Icons'
+import { BackIcon, ChangeImageIcon, EditIcon, LogOutIcon, UserIcon } from '@/ui/Icons'
 import { useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 
@@ -15,18 +15,28 @@ export default function AboutPage() {
 
   const [modal, setModal] = useState(false);
 
+  const [userName, setUserName] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [userPhoto, setUserPhoto] = useState("");
+
+  const changePhotoFn = (e: any) => {
+    setUserPhoto((URL.createObjectURL(e.target.files[0])))
+  }
+
 
   const { setLoading, user } = useAuthContext();
 
+
+  const { data: userData, loading: userLoading, error: userError } = useHelixQuery({
+    url: `/getUserData/${user?.userId}`,
+    wait: user?.userId ? false : true
+  });
 
   const { data, loading, error } = useHelixQuery({
     url: `/getSingleUserScores/${user?.userId}`,
     wait: user?.userId ? false : true
   });
-  const { data: userData, loading: userLoading, error: userError } = useHelixQuery({
-    url: `/getUserData/${user?.userId}`,
-    wait: user?.userId ? false : true
-  });
+
 
   const [totalScore, setTotalScore] = useState(0);
 
@@ -35,7 +45,14 @@ export default function AboutPage() {
       const total = data.reduce((accumulator: number, currentValue: any) => accumulator + currentValue.score, 0);
       setTotalScore(total);
     }
-  }, [data])
+  }, [data]);
+  useEffect(() => {
+    if (userData) {
+      setUserName(userData.name);
+      setUserPhoto(userData.photo);
+      setUserPhone(userData.phone);
+    }
+  }, [userData])
 
 
   const handleLogOut = () => {
@@ -49,8 +66,39 @@ export default function AboutPage() {
 
       {
         modal && <Modal modal={modal} setModal={setModal}>
-          <div>
-            This is my modal
+          <div className='flex flex-col gap-y-3'>
+            <div className='flex justify-center'>
+              {
+                userPhoto ? <Image className='h-30 bg-[#15db2559] w-30 md:h-40 md:w-40 border-2 border-green-500 rounded-full object-contain' src={userPhoto} alt={userName} width={200} height={200}></Image> :
+                  <div className='h-40 w-40 border-2 border-green-500 rounded-full'>
+                    <UserIcon color={"#15db2559"} w={160}></UserIcon>
+                  </div>
+              }
+              <div>
+                <label className='cursor-pointer' htmlFor="image">
+                  <ChangeImageIcon w={40}></ChangeImageIcon>
+                </label>
+                <input onChange={changePhotoFn} className='hidden' id="image" type="file" name="" />
+              </div>
+            </div>
+
+            <input
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              type="text"
+              placeholder="Success"
+              className="input input-success w-full"
+            />
+
+            <input
+              value={userPhone}
+              onChange={(e) => setUserName(e.target.value)}
+              type="text"
+              placeholder="Success"
+              className="input input-success w-full"
+            />
+
+            <button className="btn mt-3 btn-success">Update</button>
           </div>
         </Modal>
       }
@@ -81,7 +129,7 @@ export default function AboutPage() {
                     {
                       userData.photo ? <Image className='h-30 w-30 md:h-40 md:w-40 border-2 border-white rounded-full object-contain' src={userData.photo} alt={userData.name} width={200} height={200}></Image> :
                         <div className='h-40 w-40 border-2 border-white rounded-full'>
-                          <UserIcon w={160}></UserIcon>
+                          <UserIcon color='#fff' w={160}></UserIcon>
                         </div>
                     }
                     <div className='absolute bottom-0 left-[80%] cursor-pointer'>

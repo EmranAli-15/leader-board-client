@@ -12,7 +12,7 @@ export default function Modal({ modal, setModal, children }: { modal: boolean, s
                         {/* dummy dummy dummy */}
                     </div>
                     <div
-                        className='absolute z-999 top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] p-10 bg-white rounded-lg text-black'
+                        className='fixed md:w-100 w-[90%] z-999 top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] p-5 bg-white rounded-lg text-black'
                     >
                         {children}
                     </div>
