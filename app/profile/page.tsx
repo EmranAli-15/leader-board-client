@@ -20,6 +20,7 @@ export default function AboutPage() {
   const [userPhoto, setUserPhoto] = useState("");
 
   const changePhotoFn = (e: any) => {
+    console.log(e.target.files[0]);
     setUserPhoto((URL.createObjectURL(e.target.files[0])))
   }
 
@@ -60,7 +61,16 @@ export default function AboutPage() {
     setLoading(true);
     router.push("/");
   };
-  // /getSingleUserScores
+
+  const handleUpdateData = () => {
+    const data: any = {}
+    if (userData.name !== userName) data["name"] = userName;
+    if (userData.photo !== userPhoto) data["photo"] = userPhoto;
+    if (userData.phone !== userPhone) data["phone"] = userPhone;
+
+    console.log(data)
+  }
+
   return (
     <div className='w-full min-h-screen mainbg'>
 
@@ -92,13 +102,13 @@ export default function AboutPage() {
 
             <input
               value={userPhone}
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={(e) => setUserPhone(e.target.value)}
               type="text"
               placeholder="Success"
               className="input input-success w-full"
             />
 
-            <button className="btn mt-3 btn-success">Update</button>
+            <button onClick={handleUpdateData} className="btn mt-3 btn-success">Update</button>
           </div>
         </Modal>
       }
