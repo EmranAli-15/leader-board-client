@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { BackIcon, ChangeImageIcon, EditIcon, LogOutIcon, UserIcon } from '@/ui/Icons'
 import { useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
+import { baseQuery } from '@/helixFetch/helixFetch'
 
 export default function AboutPage() {
   const router = useRouter();
@@ -62,13 +63,13 @@ export default function AboutPage() {
     router.push("/");
   };
 
-  const handleUpdateData = () => {
+  const handleUpdateData = async () => {
     const data: any = {}
     if (userData.name !== userName) data["name"] = userName;
     if (userData.photo !== userPhoto) data["photo"] = userPhoto;
     if (userData.phone !== userPhone) data["phone"] = userPhone;
-
-    console.log(data)
+    const res = await baseQuery.query("/getAllTotalScore");
+    console.log(res);
   }
 
   return (
