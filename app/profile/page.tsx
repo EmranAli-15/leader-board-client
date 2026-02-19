@@ -70,6 +70,14 @@ export default function AboutPage() {
     if (userData.phone !== userPhone) data["phone"] = userPhone;
     const res = await baseQuery.query("/getAllTotalScore");
     console.log(res);
+
+    const up = await baseQuery.mutation({
+      url: `/updateUserData/${user?.userId}`,
+      data: data,
+      method: 'PATCH'
+    });
+
+    console.log(up);
   }
 
   return (

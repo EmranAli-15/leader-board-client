@@ -1,9 +1,14 @@
+import { HelixFetch } from "./helixFetch";
+
 export class HelixQuery {
     url = "";
     helixFetch: any = null;
-    constructor(helixFetch: Object, url: string) {
+    token: string | any = ""
+
+    constructor(helixFetch: HelixFetch, url: string, token: string | any) {
         this.url = url;
         this.helixFetch = helixFetch;
+        this.token = token;
     };
 
     async query() {
@@ -11,7 +16,14 @@ export class HelixQuery {
             return this.helixFetch.cached[this.url]
         else {
             try {
-                const response = await fetch(this.url);
+                const response = await fetch(this.url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': this.token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
                 const result = await response.json();
 
                 if (!response.ok) throw new Error(result.message)

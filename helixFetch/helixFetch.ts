@@ -1,23 +1,35 @@
+import Cookies from "js-cookie";
 import { HelixQuery } from "./helixQuery";
+import { HelixMutation } from "./helixMutation";
 
 export class HelixFetch {
     baseURL: any = "";
     token?: () => string | null;
     protected cached: any = {};
 
-    constructor({ baseURL, setToken }: { baseURL?: string, setToken?: () => string }) {
+    constructor({ baseURL, setToken }: { baseURL?: string, setToken?: () => any }) {
         this.baseURL = baseURL;
         this.token = setToken;
     }
 
     async query(url: string) {
-        console.log(this.token?.())
-
-
         const fullurl = `${this.baseURL}${url}`;
 
-        const query = new HelixQuery(this, fullurl);
+        const query = new HelixQuery(this, fullurl, this.token?.());
         const result = await query.query();
+        return result;
+    }
+
+    async mutation({ url, data, method }: { url: string, data: any, method: "PATCH" | "PUT" | "DELETE" }){
+        const fullurl = `${this.baseURL}${url}`;
+
+        console.log(fullurl);
+        console.log(this.token?.());
+        console.log(method);
+        console.log(data);
+
+        const mutation = new HelixMutation(this, fullurl, this.token?.(), method, data);
+        const result = await mutation.mutation();
         return result;
     }
 };
@@ -26,7 +38,9 @@ export const baseQuery = new HelixFetch(
     {
         baseURL: "http://localhost:5000/api",
         setToken() {
-            return "hello hello token."
+            const token = Cookies.get("auth");
+            if (token) return token;
+            return null;
         },
     }
 );
