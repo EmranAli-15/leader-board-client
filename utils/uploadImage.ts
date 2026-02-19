@@ -1,4 +1,4 @@
-const api_key = 'https://api.imgbb.com/1/upload?key=7c5149d68aa7c8554ec08575ce91bdaa'
+const api_key = 'https://api.imgbb.com/1/upload?key=15a0e39d3bf2f25b112a123831b2f026'
 
 
 export async function uploadImage(image: any) {

@@ -4,17 +4,28 @@ import Footer from '@/components/Footer'
 import Banner from '../components/Banner'
 import manNew from "@/public/manNew.png"
 import Image from 'next/image'
-import { useHelixQuery } from '@/utils/helixFetch'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { Helix } from '@/helixFetch/helixFetch'
 
 export default function page() {
 
+  const [data, setData] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const { data, loading, error } = useHelixQuery({
-    url: '/getAllTotalScore',
+  useEffect(() => {
+    const fn = async() => {
+      const res = await Helix.query("/getAllTotalScore");
+      if(res){
+        setData(res.data);
+        setLoading(false);
+        setError("");
+      }
+    }
+
+    fn();
   })
-
-
 
   return (
     <div>

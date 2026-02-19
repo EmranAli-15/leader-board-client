@@ -4,17 +4,16 @@ import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { useAuthContext } from '@/contextApi/AuthContext'
 import { useRouter } from 'next/navigation'
-import { useHelixQuery } from '@/utils/helixFetch'
 import Image from 'next/image'
 import { BackIcon, ChangeImageIcon, EditIcon, LogOutIcon, UserIcon } from '@/ui/Icons'
 import { useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
-import { baseQuery } from '@/helixFetch/helixFetch'
+import { Helix } from '@/helixFetch/helixFetch'
 
 export default function AboutPage() {
   const router = useRouter();
-
   const [modal, setModal] = useState(false);
+  const { setLoading: setContextLoading, user } = useAuthContext();
 
   const [userName, setUserName] = useState("");
   const [userPhone, setUserPhone] = useState("");
@@ -26,40 +25,54 @@ export default function AboutPage() {
   }
 
 
-  const { setLoading, user } = useAuthContext();
-
-
-  const { data: userData, loading: userLoading, error: userError } = useHelixQuery({
-    url: `/getUserData/${user?.userId}`,
-    wait: user?.userId ? false : true
-  });
-
-  const { data, loading, error } = useHelixQuery({
-    url: `/getSingleUserScores/${user?.userId}`,
-    wait: user?.userId ? false : true
-  });
-
 
   const [totalScore, setTotalScore] = useState(0);
 
+
+  const [userData, setUserData] = useState<any>({});
+  const [userLoading, setUserLoading] = useState(true);
+  const [userError, setUserError] = useState("");
+
   useEffect(() => {
-    if (data) {
-      const total = data.reduce((accumulator: number, currentValue: any) => accumulator + currentValue.score, 0);
-      setTotalScore(total);
-    }
-  }, [data]);
+    const fn = async () => {
+      const res = await Helix.query(`/getUserData/${user?.userId}`);
+      if (res.data) {
+        setUserData(res.data);
+        setUserLoading(false);
+        setUserError("");
+        setUserName(res.data.name);
+        setUserPhoto(res.data.photo);
+        setUserPhone(res.data.phone);
+      }
+    };
+
+    if (user?.userId) fn();
+  }, [user?.userId])
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   useEffect(() => {
-    if (userData) {
-      setUserName(userData.name);
-      setUserPhoto(userData.photo);
-      setUserPhone(userData.phone);
-    }
-  }, [userData])
+    const fn = async () => {
+      const res = await Helix.query(`/getSingleUserScores/${user?.userId}`);
+      if (res) {
+        setData(res.data);
+        setLoading(false);
+        setError("");
+        const total = res?.data?.reduce((accumulator: number, currentValue: any) => accumulator + currentValue.score, 0);
+        setTotalScore(total);
+      }
+    };
+
+    if (user?.userId) fn();
+  }, [user?.userId])
+
 
 
   const handleLogOut = () => {
     Cookies.remove("auth");
-    setLoading(true);
+    setContextLoading(true);
     router.push("/");
   };
 
@@ -68,10 +81,8 @@ export default function AboutPage() {
     if (userData.name !== userName) data["name"] = userName;
     if (userData.photo !== userPhoto) data["photo"] = userPhoto;
     if (userData.phone !== userPhone) data["phone"] = userPhone;
-    const res = await baseQuery.query("/getAllTotalScore");
-    console.log(res);
 
-    const up = await baseQuery.mutation({
+    const up = await Helix.mutation({
       url: `/updateUserData/${user?.userId}`,
       data: data,
       method: 'PATCH'

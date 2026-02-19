@@ -69,7 +69,7 @@ export default function Page({
                   {
                     userData.photo ? <Image className='h-30 w-30 md:h-40 md:w-40 border-2 border-white rounded-full object-contain' src={userData.photo} alt={userData.name} width={200} height={200}></Image> :
                       <div className='h-40 w-40 border-2 border-white rounded-full'>
-                        <UserIcon w={160}></UserIcon>
+                        <UserIcon color="#fff" w={160}></UserIcon>
                       </div>
                   }
                   <div>

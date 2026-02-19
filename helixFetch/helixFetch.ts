@@ -4,7 +4,7 @@ import { HelixMutation } from "./helixMutation";
 
 export class HelixFetch {
     baseURL: any = "";
-    token?: () => string | null;
+    protected token?: () => string | null;
     protected cached: any = {};
 
     constructor({ baseURL, setToken }: { baseURL?: string, setToken?: () => any }) {
@@ -20,13 +20,8 @@ export class HelixFetch {
         return result;
     }
 
-    async mutation({ url, data, method }: { url: string, data: any, method: "PATCH" | "PUT" | "DELETE" }){
+    async mutation({ url, data, method }: { url: string, data: any, method: "PATCH" | "PUT" | "DELETE" | "POST" }){
         const fullurl = `${this.baseURL}${url}`;
-
-        console.log(fullurl);
-        console.log(this.token?.());
-        console.log(method);
-        console.log(data);
 
         const mutation = new HelixMutation(this, fullurl, this.token?.(), method, data);
         const result = await mutation.mutation();
@@ -34,7 +29,7 @@ export class HelixFetch {
     }
 };
 
-export const baseQuery = new HelixFetch(
+export const Helix = new HelixFetch(
     {
         baseURL: "http://localhost:5000/api",
         setToken() {

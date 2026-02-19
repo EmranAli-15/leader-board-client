@@ -5,40 +5,26 @@ import Cookies from 'js-cookie'
 import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/contextApi/AuthContext';
+import { Helix } from '@/helixFetch/helixFetch';
 
 export default function LoginPage() {
     const router = useRouter();
-    const {setLoading} = useAuthContext();
+    const { setLoading } = useAuthContext();
 
     const [email, setEmail] = useState("rafiulhasanrifat2002@gmail");
     const [password, setPassword] = useState("123456");
 
 
-
-
-
     const handleLogin = async (data: any) => {
-        try {
-            const response = await fetch(`${baseUrl}/loginUser`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            const result = await response.json();
-
-            if (!response.ok) {
-                throw new Error(result.message)
-            }
-
-            Cookies.set('auth', result.data);
+        const res = await Helix.mutation({
+            url: `/loginUser`,
+            method: "POST",
+            data: data
+        });
+        if (res) {
+            if (res.data) Cookies.set('auth', res.data);
             setLoading(true);
             router.push("/");
-
-        } catch (error: any) {
-            console.log(error.message)
         }
     }
 
