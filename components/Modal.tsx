@@ -7,8 +7,8 @@ export default function Modal({ modal, setModal, children }: { modal: boolean, s
     return (
         <>
             {
-                modal && <div>
-                    <div onClick={() => setModal(false)} className='absolute w-full h-full bg-black/70 z-99'>
+                modal && <>
+                    <div onClick={() => setModal(false)} className='absolute inset-0 w-screen h-screen bg-black/70 z-99'>
                         {/* dummy dummy dummy */}
                     </div>
                     <div
@@ -16,7 +16,7 @@ export default function Modal({ modal, setModal, children }: { modal: boolean, s
                     >
                         {children}
                     </div>
-                </div>
+                </>
             }
         </>
     )

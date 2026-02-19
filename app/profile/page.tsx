@@ -9,18 +9,30 @@ import { BackIcon, ChangeImageIcon, EditIcon, LogOutIcon, UserIcon } from '@/ui/
 import { useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import { Helix } from '@/helixFetch/helixFetch'
+import { uploadImage } from '@/utils/uploadImage'
+import Fun from '@/components/Fun'
 
 export default function AboutPage() {
   const router = useRouter();
   const [modal, setModal] = useState(false);
   const { setLoading: setContextLoading, user } = useAuthContext();
+  const [updateLoading, setUpdateLoading] = useState(false);
 
   const [userName, setUserName] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
+  const [photoFile, setPhotoFile] = useState<any>();
+
+
+
+  const [passModal, setPassModal] = useState(false);
+  const [currentPass, setCurrentPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [conPass, setConPass] = useState("");
+
 
   const changePhotoFn = (e: any) => {
-    console.log(e.target.files[0]);
+    setPhotoFile(e.target.files[0])
     setUserPhoto((URL.createObjectURL(e.target.files[0])))
   }
 
@@ -38,6 +50,7 @@ export default function AboutPage() {
       const res = await Helix.query(`/getUserData/${user?.userId}`);
       if (res.data) {
         setUserData(res.data);
+        console.log(res.data)
         setUserLoading(false);
         setUserError("");
         setUserName(res.data.name);
@@ -77,58 +90,105 @@ export default function AboutPage() {
   };
 
   const handleUpdateData = async () => {
+    setUpdateLoading(true)
     const data: any = {}
     if (userData.name !== userName) data["name"] = userName;
-    if (userData.photo !== userPhoto) data["photo"] = userPhoto;
+    if (userData.photo !== userPhoto) {
+      const res = await uploadImage(photoFile);
+      if (res) {
+        data["photo"] = userPhoto;
+      }
+    }
     if (userData.phone !== userPhone) data["phone"] = userPhone;
 
-    const up = await Helix.mutation({
+    await Helix.mutation({
       url: `/updateUserData/${user?.userId}`,
       data: data,
       method: 'PATCH'
     });
 
-    console.log(up);
+    setUpdateLoading(false);
+    window.location.reload()
   }
 
   return (
     <div className='w-full min-h-screen mainbg'>
+      {
+        <Modal modal={passModal} setModal={setPassModal}>
+          <div className='flex flex-col gap-y-5'>
+            <input
+              value={currentPass}
+              onChange={(e) => setCurrentPass(e.target.value)}
+              type="text"
+              placeholder="Current password"
+              className="input input-success w-full"
+            />
+            <input
+              value={newPass}
+              onChange={(e) => setNewPass(e.target.value)}
+              type="text"
+              placeholder="New password"
+              className="input input-success w-full"
+            />
+            <input
+              value={conPass}
+              onChange={(e) => setConPass(e.target.value)}
+              type="text"
+              placeholder="Confirm password"
+              className="input input-success w-full"
+            />
+
+            <button className="btn mt-3 btn-success">
+              {updateLoading ? "wait a moment" : "Confirm Change"}
+            </button>
+          </div>
+        </Modal>
+      }
 
       {
         modal && <Modal modal={modal} setModal={setModal}>
-          <div className='flex flex-col gap-y-3'>
-            <div className='flex justify-center'>
-              {
-                userPhoto ? <Image className='h-30 bg-[#15db2559] w-30 md:h-40 md:w-40 border-2 border-green-500 rounded-full object-contain' src={userPhoto} alt={userName} width={200} height={200}></Image> :
-                  <div className='h-40 w-40 border-2 border-green-500 rounded-full'>
-                    <UserIcon color={"#15db2559"} w={160}></UserIcon>
-                  </div>
-              }
-              <div>
-                <label className='cursor-pointer' htmlFor="image">
-                  <ChangeImageIcon w={40}></ChangeImageIcon>
-                </label>
-                <input onChange={changePhotoFn} className='hidden' id="image" type="file" name="" />
+          <div>
+            <div className='flex flex-col gap-y-3'>
+              <div className='flex justify-center'>
+                {
+                  userPhoto ? <Image className='h-30 bg-[#15db2559] w-30 md:h-40 md:w-40 border-2 border-green-500 rounded-full object-contain' src={userPhoto} alt={userName} width={200} height={200}></Image> :
+                    <div className='h-40 w-40 border-2 border-green-500 rounded-full'>
+                      <UserIcon color={"#15db2559"} w={160}></UserIcon>
+                    </div>
+                }
+                <div>
+                  <label className='cursor-pointer' htmlFor="image">
+                    <ChangeImageIcon w={40}></ChangeImageIcon>
+                  </label>
+                  <input onChange={changePhotoFn} className='hidden' id="image" type="file" name="" />
+                </div>
               </div>
+
+              <input
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                type="text"
+                placeholder="Success"
+                className="input input-success w-full"
+              />
+
+              <input
+                value={userPhone}
+                onChange={(e) => setUserPhone(e.target.value)}
+                type="text"
+                placeholder="Success"
+                className="input input-success w-full"
+              />
+
+              <button onClick={handleUpdateData} className="btn mt-3 btn-success">
+                {updateLoading ? "wait a moment" : "Update"}
+              </button>
             </div>
-
-            <input
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              type="text"
-              placeholder="Success"
-              className="input input-success w-full"
-            />
-
-            <input
-              value={userPhone}
-              onChange={(e) => setUserPhone(e.target.value)}
-              type="text"
-              placeholder="Success"
-              className="input input-success w-full"
-            />
-
-            <button onClick={handleUpdateData} className="btn mt-3 btn-success">Update</button>
+            <hr className='my-5' />
+            <button onClick={() => {
+              setModal(false);
+              setPassModal(true);
+            }} className='link link-success'>Change password</button>
           </div>
         </Modal>
       }
@@ -151,6 +211,9 @@ export default function AboutPage() {
       <div className='max-w-7xl mx-auto px-2'>
         <div className='mt-10'>
           {
+            userLoading && <div className='flex justify-center'><div className="loader"></div></div>
+          }
+          {
             !userLoading && !userError && userData && <div className='text-white'>
 
               <div className='md:flex justify-between'>
@@ -162,8 +225,8 @@ export default function AboutPage() {
                           <UserIcon color='#fff' w={160}></UserIcon>
                         </div>
                     }
-                    <div className='absolute bottom-0 left-[80%] cursor-pointer'>
-                      <button onClick={() => setModal(!modal)}>
+                    <div className='absolute bottom-0 left-[80%]'>
+                      <button className='cursor-pointer' onClick={() => setModal(!modal)}>
                         <EditIcon w={30}></EditIcon>
                       </button>
                     </div>
@@ -185,8 +248,15 @@ export default function AboutPage() {
           }
         </div>
 
+        <div className='mt-5'>
+          <Fun score={totalScore}></Fun>
+        </div>
+
         <div className='mt-10 w-full'>
           <div>
+            {
+              loading && <div className='flex justify-center'><div className="loader"></div></div>
+            }
             {
               !loading && !error && data && <div
                 className='grid grid-cols-2 md:grid-cols-4 gap-1'>

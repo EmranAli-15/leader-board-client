@@ -15,9 +15,9 @@ export default function page() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fn = async() => {
+    const fn = async () => {
       const res = await Helix.query("/getAllTotalScore");
-      if(res){
+      if (res) {
         setData(res.data);
         setLoading(false);
         setError("");
@@ -31,7 +31,13 @@ export default function page() {
     <div>
       <Banner></Banner>
 
+      {
+        loading && <div className='flex justify-center'><div className="loader"></div></div>
+      }
+
       <div className='max-w-7xl mx-auto relative -mt-40 mainbg'>
+
+
 
         {
           !loading && !error && <>
