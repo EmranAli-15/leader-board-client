@@ -13,16 +13,22 @@ export default function LoginPage() {
 
     const [email, setEmail] = useState("rafiulhasanrifat2002@gmail");
     const [password, setPassword] = useState("123456");
+    const [error, setError] = useState("");
 
 
     const handleLogin = async (data: any) => {
+        setError("");
         const res = await Helix.mutation({
             url: `/loginUser`,
             method: "POST",
             data: data
         });
-        if (res) {
-            if (res.data) Cookies.set('auth', res.data);
+        if (!res.success) {
+            setError(res.error.message);
+        }
+
+        if (res.success) {
+            if (res.result.data) Cookies.set('auth', res.result.data);
             setLoading(true);
             router.push("/");
         }
@@ -39,6 +45,9 @@ export default function LoginPage() {
         <div className='mainbg max-w-7xl mx-auto flex justify-center items-center min-h-screen'>
 
             <div className="w-[90%] md:w-130 p-4 bg-[#00000094] flex flex-col items-center justify-center">
+                {
+                    error && <h1 className='text-center text-red-600 mb-3'>{error}</h1>
+                }
                 <form onSubmit={handleSubmit} className="w-full shadow-2xl flex flex-col gap-y-5">
                     <div>
                         <label htmlFor="" className='text-white'>Email:</label><br />

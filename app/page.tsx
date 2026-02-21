@@ -20,7 +20,6 @@ export default function page() {
       if (res) {
         setData(res.data);
         setLoading(false);
-        console.log(res.data)
         setError("");
       }
     }

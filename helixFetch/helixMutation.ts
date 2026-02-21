@@ -30,10 +30,17 @@ export class HelixMutation {
 
             if (!response.ok) throw new Error(result.message)
 
+
             this.helixFetch.cached[this.url] = result;
-            return result;
+            return {
+                success: true,
+                result
+            };
         } catch (error: any) {
-            return error;
+            return {
+                success: false,
+                error
+            };
         }
     }
 };

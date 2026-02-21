@@ -6,7 +6,7 @@ import { useAuthContext } from '@/contextApi/AuthContext'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { BackIcon, ChangeImageIcon, EditIcon, LogOutIcon, UserIcon } from '@/ui/Icons'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import { Helix } from '@/helixFetch/helixFetch'
 import { uploadImage } from '@/utils/uploadImage'
@@ -25,11 +25,49 @@ export default function AboutPage() {
 
 
 
+  // Password change functionalitis
   const [passModal, setPassModal] = useState(false);
   const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [conPass, setConPass] = useState("");
+  const [passError, setPassError] = useState("");
+  const [passLoading, setPassLoading] = useState(false);
+  const [passwordChangedSuccessfull, setPasswordChangedSuccessfull] = useState("");
 
+  const handleChangePassword = async (e: FormEvent) => {
+    e.preventDefault();
+    setPassLoading(true);
+    setPasswordChangedSuccessfull("");
+    setPassError("");
+    if (newPass !== conPass) {
+      return setPassError("Password not matched.");
+    }
+
+    const data = {
+      userId: user?.userId,
+      currentPass: currentPass,
+      newPass: conPass
+    }
+
+    const res = await Helix.mutation({
+      url: "/changeUserPassword",
+      method: "PATCH",
+      data: data
+    });
+    if (res.success) {
+      setPasswordChangedSuccessfull(res.result.message);
+      setCurrentPass("");
+      setNewPass("");
+      setConPass("");
+    }
+
+    if (!res.success)
+      setPassError(res.error.message)
+
+    setPassLoading(false);
+  }
+  // Password change functionalitis end
+  // Password change functionalitis end
 
   const changePhotoFn = (e: any) => {
     setPhotoFile(e.target.files[0])
@@ -50,7 +88,6 @@ export default function AboutPage() {
       const res = await Helix.query(`/getUserData/${user?.userId}`);
       if (res.data) {
         setUserData(res.data);
-        console.log(res.data)
         setUserLoading(false);
         setUserError("");
         setUserName(res.data.name);
@@ -100,7 +137,7 @@ export default function AboutPage() {
       }
     }
     if (userData.phone !== userPhone) data["phone"] = userPhone;
-    
+
     await Helix.mutation({
       url: `/updateUserData/${user?.userId}`,
       data: data,
@@ -115,33 +152,53 @@ export default function AboutPage() {
     <div className='w-full min-h-screen mainbg'>
       {
         <Modal modal={passModal} setModal={setPassModal}>
-          <div className='flex flex-col gap-y-5'>
-            <input
-              value={currentPass}
-              onChange={(e) => setCurrentPass(e.target.value)}
-              type="text"
-              placeholder="Current password"
-              className="input input-success w-full"
-            />
-            <input
-              value={newPass}
-              onChange={(e) => setNewPass(e.target.value)}
-              type="text"
-              placeholder="New password"
-              className="input input-success w-full"
-            />
-            <input
-              value={conPass}
-              onChange={(e) => setConPass(e.target.value)}
-              type="text"
-              placeholder="Confirm password"
-              className="input input-success w-full"
-            />
+          {
+            passError && <p className='text-red-600 text-center mb-3'>{passError}</p>
+          }
+          {
+            passwordChangedSuccessfull && <p className='text-green-600 text-center mb-3'>{passwordChangedSuccessfull}</p>
+          }
+          <form onSubmit={handleChangePassword} className='flex flex-col gap-y-5'>
+            <div>
+              <p className='text-sm mb-2 relative'>Current password:</p>
+              <input
+                required
+                value={currentPass}
+                onChange={(e) => setCurrentPass(e.target.value)}
+                type="text"
+                placeholder="type current password"
+                className="input input-success w-full"
+              />
+            </div>
 
-            <button className="btn mt-3 btn-success">
-              {updateLoading ? "wait a moment" : "Confirm Change"}
+            <div>
+              <p className='text-sm mb-2 relative'>New password:</p>
+              <input
+                required
+                value={newPass}
+                onChange={(e) => setNewPass(e.target.value)}
+                type="text"
+                placeholder="type new password"
+                className="input input-success w-full"
+              />
+            </div>
+
+            <div className='relative'>
+              <p className='text-sm mb-2 relative'>Confirm password:</p>
+              <input
+                required
+                value={conPass}
+                onChange={(e) => setConPass(e.target.value)}
+                type="text"
+                placeholder="type confirm password"
+                className="input input-success w-full"
+              />
+            </div>
+
+            <button type='submit' className="btn mt-3 btn-success">
+              {passLoading ? "wait a moment" : "Confirm Change"}
             </button>
-          </div>
+          </form>
         </Modal>
       }
 
