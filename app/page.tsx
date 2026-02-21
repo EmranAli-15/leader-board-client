@@ -20,6 +20,7 @@ export default function page() {
       if (res) {
         setData(res.data);
         setLoading(false);
+        console.log(res.data)
         setError("");
       }
     }
@@ -54,8 +55,8 @@ export default function page() {
                       </div>
                     </div>
                     {
-                      data[1]?.photo ? <Image className='h-20 w-20 md:h-35 md:w-35 object-contain absolute bottom-0' src={data[1].photo} height={100} width={100} alt='me'></Image> :
-                        <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={100} width={100} alt='me'></Image>
+                      data[1]?.photo ? <Image className='h-20 w-20 md:h-35 md:w-35 object-contain absolute bottom-0' src={data[1].photo} height={100} width={100} alt={data[2].name}></Image> :
+                        <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={100} width={100} alt={data[2].name}></Image>
                     }
                   </div>
                   <div className='w-20 md:w-35'>
@@ -75,8 +76,8 @@ export default function page() {
                       </div>
                     </div>
                     {
-                      data[0]?.photo ? <Image className='h-20 w-20 md:h-35 md:w-35 object-contain absolute bottom-0' src={data[0].photo} height={100} width={100} alt='me'></Image> :
-                        <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={100} width={100} alt='me'></Image>
+                      data[0]?.photo ? <Image className='h-20 w-20 md:h-35 md:w-35 object-contain absolute bottom-0' src={data[0].photo} height={100} width={100} alt={data[0].name}></Image> :
+                        <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={100} width={100} alt={data[0].name}></Image>
                     }
                   </div>
                   <div className='w-20 md:w-35'>
@@ -94,8 +95,8 @@ export default function page() {
                       </div>
                     </div>
                     {
-                      data[2]?.photo ? <Image className='h-20 w-20 md:h-35 md:w-35 object-contain absolute bottom-0' src={data[2].photo} height={100} width={100} alt='me'></Image> :
-                        <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={100} width={100} alt='me'></Image>
+                      data[2]?.photo ? <Image className='h-20 w-20 md:h-35 md:w-35 object-contain absolute bottom-0' src={data[2].photo} height={100} width={100} alt={data[2].name}></Image> :
+                        <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={100} width={100} alt={data[2].name}></Image>
                     }
                   </div>
                   <div className='w-20 md:w-35'>

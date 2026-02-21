@@ -96,11 +96,11 @@ export default function AboutPage() {
     if (userData.photo !== userPhoto) {
       const res = await uploadImage(photoFile);
       if (res) {
-        data["photo"] = userPhoto;
+        data["photo"] = res;
       }
     }
     if (userData.phone !== userPhone) data["phone"] = userPhone;
-
+    
     await Helix.mutation({
       url: `/updateUserData/${user?.userId}`,
       data: data,
