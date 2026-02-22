@@ -17,15 +17,19 @@ export default function page() {
   useEffect(() => {
     const fn = async () => {
       const res = await Helix.query("/getAllTotalScore");
-      if (res) {
-        setData(res.data);
+      if (res.success) {
+        setData(res.result.data);
         setLoading(false);
         setError("");
+      }
+      else {
+        setError(res.error?.message);
+        setLoading(false);
       }
     }
 
     fn();
-  })
+  }, [])
 
   return (
     <div>
@@ -34,13 +38,16 @@ export default function page() {
       {
         loading && <div className='flex justify-center'><div className="loader"></div></div>
       }
+      {
+        error && <div className='flex justify-center text-white text-xl'>{error}</div>
+      }
 
       <div className='max-w-7xl mx-auto relative -mt-40 mainbg'>
 
 
 
         {
-          !loading && !error && <>
+          !loading && !error && data && <>
             {/* FOR 3 PERSON */}
             <div className='flex justify-center'>
               <div className='flex gap-x-5 md:gap-x-10'>
@@ -49,13 +56,11 @@ export default function page() {
                   <div className='h-35 w-20 md:h-55 md:w-35 bg-linear-to-t from-[#0874f0] to-black rounded-md border-2 border-white relative overflow-hidden'>
                     <div className='absolute top-2 w-full'>
                       <div className='flex justify-center gap-x-2'>
-                        {/* <div><Star w={40}></Star></div>
-                    <div><Star w={40}></Star></div> */}
                       </div>
                     </div>
                     {
                       data[1]?.photo ? <Image className='h-20 w-20 md:h-35 md:w-35 object-contain absolute bottom-0' src={data[1].photo} height={100} width={100} alt={data[2].name}></Image> :
-                        <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={100} width={100} alt={data[2].name}></Image>
+                        <Image className='h-20 w-20 md:h-35 md:w-35 object-cover absolute bottom-0' src={manNew} height={100} width={100} alt={data[1].name}></Image>
                     }
                   </div>
                   <div className='w-20 md:w-35'>
@@ -69,9 +74,6 @@ export default function page() {
                   <div className='h-35 w-20 md:h-55 md:w-35 bg-linear-to-t from-[#f0ba08] to-black rounded-md border-2 border-white relative overflow-hidden'>
                     <div className='absolute top-2'>
                       <div className='flex gap-x-2'>
-                        {/* <div className='relative top-2'><Star w={40}></Star></div>
-                    <div className='relative -top-2'><Star w={40}></Star></div>
-                    <div className='relative top-2'><Star w={40}></Star></div> */}
                       </div>
                     </div>
                     {
@@ -90,7 +92,6 @@ export default function page() {
                   <div className='h-35 w-20 md:h-55 md:w-35 bg-linear-to-t from-[#f008f0] to-black rounded-md border-2 border-white relative overflow-hidden'>
                     <div className='absolute top-2 w-full'>
                       <div className='flex justify-center'>
-                        {/* <div><Star w={40}></Star></div> */}
                       </div>
                     </div>
                     {

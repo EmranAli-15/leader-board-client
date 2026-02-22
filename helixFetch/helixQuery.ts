@@ -13,7 +13,10 @@ export class HelixQuery {
 
     async query() {
         if (this.helixFetch.cached[this.url])
-            return this.helixFetch.cached[this.url]
+            return {
+                success: true,
+                result: this.helixFetch.cached[this.url]
+            }
         else {
             try {
                 const response = await fetch(this.url, {
@@ -23,15 +26,21 @@ export class HelixQuery {
                         'Content-Type': 'application/json'
                     }
                 });
-                
+
                 const result = await response.json();
 
                 if (!response.ok) throw new Error(result.message)
 
                 this.helixFetch.cached[this.url] = result;
-                return result;
+                return {
+                    success: true,
+                    result
+                };
             } catch (error: any) {
-                return error;
+                return {
+                    success: false,
+                    error
+                };
             }
         }
     }

@@ -69,24 +69,20 @@ export default function AboutPage() {
   // Password change functionalitis end
   // Password change functionalitis end
 
-  const changePhotoFn = (e: any) => {
-    setPhotoFile(e.target.files[0])
-    setUserPhoto((URL.createObjectURL(e.target.files[0])))
-  }
 
 
 
+
+
+  // Fetching user data
   const [totalScore, setTotalScore] = useState(0);
-
-
   const [userData, setUserData] = useState<any>({});
   const [userLoading, setUserLoading] = useState(true);
   const [userError, setUserError] = useState("");
-
   useEffect(() => {
     const fn = async () => {
-      const res = await Helix.query(`/getUserData/${user?.userId}`);
-      if (res.data) {
+      const { success, result: res } = await Helix.query(`/getUserData/${user?.userId}`);
+      if (success) {
         setUserData(res.data);
         setUserLoading(false);
         setUserError("");
@@ -98,15 +94,22 @@ export default function AboutPage() {
 
     if (user?.userId) fn();
   }, [user?.userId])
+  // Fetching user data end
+  // Fetching user data end
 
+
+
+
+
+
+  // Fetching user scores
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
   useEffect(() => {
     const fn = async () => {
-      const res = await Helix.query(`/getSingleUserScores/${user?.userId}`);
-      if (res) {
+      const { success, result: res } = await Helix.query(`/getSingleUserScores/${user?.userId}`);
+      if (success) {
         setData(res.data);
         setLoading(false);
         setError("");
@@ -117,6 +120,8 @@ export default function AboutPage() {
 
     if (user?.userId) fn();
   }, [user?.userId])
+  // Fetching user scores end
+  // Fetching user scores end
 
 
 
@@ -125,6 +130,20 @@ export default function AboutPage() {
     setContextLoading(true);
     router.push("/");
   };
+
+
+
+
+
+
+
+
+
+  // Updating information
+  const changePhotoFn = (e: any) => {
+    setPhotoFile(e.target.files[0])
+    setUserPhoto((URL.createObjectURL(e.target.files[0])))
+  }
 
   const handleUpdateData = async () => {
     setUpdateLoading(true)
@@ -146,7 +165,12 @@ export default function AboutPage() {
 
     setUpdateLoading(false);
     window.location.reload()
-  }
+  };
+  // Updating information end
+  // Updating information end
+
+
+
 
   return (
     <div className='w-full min-h-screen mainbg'>
@@ -305,8 +329,14 @@ export default function AboutPage() {
           }
         </div>
 
-        <div className='mt-5'>
+        {/* <div className='mt-5'>
           <Fun score={totalScore}></Fun>
+        </div> */}
+
+        <div>
+          <Link href="/task-submit">
+            <button className='btn btn-success btn-sm'>Submit task</button>
+          </Link>
         </div>
 
         <div className='mt-10 w-full'>
