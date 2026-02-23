@@ -290,10 +290,14 @@ export default function AboutPage() {
       </div>
 
       <div className='max-w-7xl mx-auto px-2'>
+
+        {
+          userLoading || loading ? <div className='absolute left-1/2 -translate-x-1/2'>
+            <div className="loader"></div>
+          </div> : ""
+        }
+
         <div className='mt-10'>
-          {
-            userLoading && <div className='flex justify-center'><div className="loader"></div></div>
-          }
           {
             !userLoading && !userError && userData && <div className='text-white'>
 
@@ -325,30 +329,23 @@ export default function AboutPage() {
                 </div>
               </div>
 
+              <div className='flex justify-end my-10'>
+                <div className='flex items-center gap-x-2'>
+                  <Link href="/task-submit">
+                    <button className='btn btn-success btn-sm'>Submit task</button>
+                  </Link>
+                  <Link href="/task-submit">
+                    <button className='btn btn-success btn-sm'>Today's feedback</button>
+                  </Link>
+                </div>
+              </div>
             </div>
           }
         </div>
 
-        {/* <div className='mt-5'>
-          <Fun score={totalScore}></Fun>
-        </div> */}
-
-        <div className='flex justify-end my-10'>
-          <div className='flex items-center gap-x-2'>
-            <Link href="/task-submit">
-              <button className='btn btn-success btn-sm'>Submit task</button>
-            </Link>
-            <Link href="/task-submit">
-              <button className='btn btn-success btn-sm'>Today's feedback</button>
-            </Link>
-          </div>
-        </div>
 
         <div className='w-full'>
           <div>
-            {
-              loading && <div className='flex justify-center'><div className="loader"></div></div>
-            }
             {
               !loading && !error && data && <div
                 className='grid grid-cols-2 md:grid-cols-4 gap-1'>
@@ -365,7 +362,6 @@ export default function AboutPage() {
             }
           </div>
         </div>
-
 
       </div>
     </div>

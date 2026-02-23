@@ -2,21 +2,44 @@
 
 import { useAuthContext } from '@/contextApi/AuthContext';
 import { Helix } from '@/helixFetch/helixFetch';
+import { BackIcon } from '@/ui/Icons';
 import { error } from 'console';
 import moment from 'moment';
-import { useState } from 'react'
+import Link from 'next/link';
+import { useEffect, useState } from 'react'
 
 export default function page() {
     const { user } = useAuthContext()
 
     const [solution, setSolution] = useState("");
+
+
+
+    // Getting submission
+    const [getSubmissionLoading, setGetSubmissionLoading] = useState(true);
+    useEffect(() => {
+
+        const fn = async () => {
+            const { success, result } = await Helix.query(`/getSingleSubmission/${user?.userId}`);
+            if (success) {
+                setSolution(result.data.solution);
+            }
+            setGetSubmissionLoading(false);
+        }
+
+        if (user?.userId) {
+            fn();
+        }
+    }, [user?.userId])
+    // Getting submission end
+    // Getting submission end
+
+
+
+    // Submission posting
     const [solutionError, setSolutionError] = useState("");
-
-
     const [loading, setLoading] = useState(false);
     const [solutionSuccess, setSolutionSuccess] = useState("");
-
-
 
     const handleTaskubmit = async () => {
         setLoading(true);
@@ -49,18 +72,28 @@ export default function page() {
         if (success) setSolutionSuccess(result.message);
         if (!success) setSolutionError(error.message);
         setLoading(false);
-    }
+    };
+    // Submission posting end
+    // Submission posting end
 
     return (
         <div className='w-full min-h-screen mainbg'>
+            <div className='flex justify-between bg-[#15db2559] p-2'>
+                <Link href="/profile">
+                    <div className='flex gap-1 items-center text-white'>
+                        <BackIcon w={30}></BackIcon>
+                        <p className='text-[16px]'>Back</p>
+                    </div>
+                </Link>
+            </div>
             <div className='max-w-7xl mx-auto px-2'>
-                <div>
+                <div className='mb-10'>
                     <h1 className='text-white my-3 text-center text-xl'>Paste your all solution codes:</h1>
 
                     <textarea
                         value={solution}
                         onChange={(e) => setSolution(e.target.value)}
-                        placeholder="Paste here your codes."
+                        placeholder={getSubmissionLoading ? "loading your codes..." : "Paste here your codes."}
                         className="textarea w-full h-[80vh] textarea-success bg-[#08791148] text-white"
                     >
                     </textarea>
