@@ -333,13 +333,18 @@ export default function AboutPage() {
           <Fun score={totalScore}></Fun>
         </div> */}
 
-        <div>
-          <Link href="/task-submit">
-            <button className='btn btn-success btn-sm'>Submit task</button>
-          </Link>
+        <div className='flex justify-end my-10'>
+          <div className='flex items-center gap-x-2'>
+            <Link href="/task-submit">
+              <button className='btn btn-success btn-sm'>Submit task</button>
+            </Link>
+            <Link href="/task-submit">
+              <button className='btn btn-success btn-sm'>Today's feedback</button>
+            </Link>
+          </div>
         </div>
 
-        <div className='mt-10 w-full'>
+        <div className='w-full'>
           <div>
             {
               loading && <div className='flex justify-center'><div className="loader"></div></div>
