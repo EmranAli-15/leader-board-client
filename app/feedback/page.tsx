@@ -37,9 +37,9 @@ export default function page() {
 
             <div className='max-w-7xl mx-auto px-2'>
                 <h1 className='text-center text-lg text-white underline'>My today's feedback</h1>
-                <h1 className='text-white my-5'>
+                <pre className='text-white my-5'>
                     {data}
-                </h1>
+                </pre>
             </div>
         </div>
     )

@@ -77,7 +77,9 @@ export default function page() {
                                                 <Image className='h-12 w-10 object-cover' src={user.photo} width={100} height={100} alt={user.name}></Image>
                                             </td>
                                             <td className='text-center'>
-                                                <button className='btn btn-xs btn-secondary'>Go inside</button>
+                                                <Link href={`/admin-add/${user._id}`}>
+                                                    <button className='btn btn-xs btn-secondary'>Go inside</button>
+                                                </Link>
                                             </td>
                                             <td className='text-center'>
                                                 <button className='btn btn-xs btn-warning'>Update</button>
