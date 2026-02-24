@@ -334,7 +334,7 @@ export default function AboutPage() {
                   <Link href="/task-submit">
                     <button className='btn btn-success btn-sm'>Submit task</button>
                   </Link>
-                  <Link href="/task-submit">
+                  <Link href="/feedback">
                     <button className='btn btn-success btn-sm'>Today's feedback</button>
                   </Link>
                 </div>

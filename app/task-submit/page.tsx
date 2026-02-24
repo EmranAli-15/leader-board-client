@@ -12,6 +12,7 @@ export default function page() {
     const { user } = useAuthContext()
 
     const [solution, setSolution] = useState("");
+    const [time, setTime] = useState("");
 
 
 
@@ -22,7 +23,8 @@ export default function page() {
         const fn = async () => {
             const { success, result } = await Helix.query(`/getSingleSubmission/${user?.userId}`);
             if (success) {
-                setSolution(result.data.solution);
+                setSolution(result?.data?.solution);
+                setTime(result?.data?.time);
             }
             setGetSubmissionLoading(false);
         }
@@ -89,7 +91,7 @@ export default function page() {
             <div className='max-w-7xl mx-auto px-2'>
                 <div className='mb-10'>
                     <h1 className='text-white my-3 text-center text-xl'>Paste your all solution codes:</h1>
-
+                    <h1 className='text-right text-yellow-300'>{time}</h1>
                     <textarea
                         value={solution}
                         onChange={(e) => setSolution(e.target.value)}
