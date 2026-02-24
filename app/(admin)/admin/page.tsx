@@ -82,7 +82,9 @@ export default function page() {
                                                 </Link>
                                             </td>
                                             <td className='text-center'>
-                                                <button className='btn btn-xs btn-warning'>Update</button>
+                                                <Link href={`/admin-edit/${user._id}`}>
+                                                    <button className='btn btn-xs btn-warning'>Update</button>
+                                                </Link>
                                             </td>
                                         </tr>
                                     )

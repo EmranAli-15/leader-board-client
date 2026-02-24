@@ -20,7 +20,7 @@ export class HelixFetch {
         return result;
     }
 
-    async mutation({ url, data, method }: { url: string, data: any, method: "PATCH" | "PUT" | "DELETE" | "POST" }){
+    async mutation({ url, data, method }: { url: string, data?: any, method: "PATCH" | "PUT" | "DELETE" | "POST" }){
         const fullurl = `${this.baseURL}${url}`;
 
         const mutation = new HelixMutation(this, fullurl, this.token?.(), method, data);

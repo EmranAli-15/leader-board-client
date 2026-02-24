@@ -7,7 +7,7 @@ export class HelixMutation {
     method: string = "";
     data: any = null;
 
-    constructor(helixFetch: HelixFetch, url: string, token: string | any, method: string, data: any) {
+    constructor(helixFetch: HelixFetch, url: string, token: string | any, method: string, data?: any) {
         this.url = url;
         this.helixFetch = helixFetch;
         this.token = token;
