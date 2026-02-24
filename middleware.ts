@@ -10,7 +10,7 @@ const adminRoutes = ["/admin", "/admin-add", "/admin-edit"]
 export function middleware(request: NextRequest) {
     const token = request.cookies.get('auth')?.value;
 
-    let decoded;
+    let decoded: any;
     if (token) {
         decoded = jwtDecode(token);
     }
@@ -21,6 +21,9 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/", request.url))
     }
     else if (!token && (privetRoutes.includes(pathname) || adminRoutes.includes(pathname))) {
+        return NextResponse.redirect(new URL("/", request.url))
+    }
+    else if (token && decoded?.role == "user" && adminRoutes.includes(pathname)) {
         return NextResponse.redirect(new URL("/", request.url))
     }
 

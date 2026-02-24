@@ -8,46 +8,42 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
-export default function Page({
-    params,
-}: {
-    params: Promise<{ id: string }>
-}) {
+export default function Page({ params, }: { params: Promise<{ id: string }> }) {
 
-    const [id, setId] = useState("")
-    useEffect(() => {
-        (
-            async () => {
-                const { id } = await params
-                setId(id)
-            }
-        )()
-    });
+  const [id, setId] = useState("")
+  useEffect(() => {
+    (
+      async () => {
+        const { id } = await params
+        setId(id)
+      }
+    )()
+  });
 
 
 
-    const router = useRouter();
-    const { setLoading, user } = useAuthContext();
+  const router = useRouter();
+  const { setLoading, user } = useAuthContext();
 
-    const { data, loading, error } = useHelixQuery({
-        url: `/getSingleUserScores/${id}`,
-        wait: id ? false : true
-    });
-    const { data: userData, loading: userLoading, error: userError } = useHelixQuery({
-        url: `/getUserData/${id}`,
-        wait: id ? false : true
-    });
+  const { data, loading, error } = useHelixQuery({
+    url: `/getSingleUserScores/${id}`,
+    wait: id ? false : true
+  });
+  const { data: userData, loading: userLoading, error: userError } = useHelixQuery({
+    url: `/getUserData/${id}`,
+    wait: id ? false : true
+  });
 
-    const [totalScore, setTotalScore] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
 
-    useEffect(() => {
-        if (data) {
-            const total = data.reduce((accumulator: number, currentValue: any) => accumulator + currentValue.score, 0);
-            setTotalScore(total);
-        }
-    }, [data])
+  useEffect(() => {
+    if (data) {
+      const total = data.reduce((accumulator: number, currentValue: any) => accumulator + currentValue.score, 0);
+      setTotalScore(total);
+    }
+  }, [data])
 
-    return (
+  return (
     <div className='w-full min-h-screen mainbg'>
 
       <div className='flex justify-between bg-[#15db2559] p-2'>
