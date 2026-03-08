@@ -17,6 +17,15 @@ export function middleware(request: NextRequest) {
 
     const { pathname } = request.nextUrl;
 
+    // const maintenance = false;
+
+    // if (maintenance) {
+    //     return NextResponse.redirect(new URL("/maintenance", request.url));
+    // }
+    // if (!maintenance && pathname === "/maintenance") {
+    //     return NextResponse.redirect(new URL("/", request.url));
+    // }
+
     if (token && authRoutes.includes(pathname)) {
         return NextResponse.redirect(new URL("/", request.url))
     }

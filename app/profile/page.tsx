@@ -171,199 +171,232 @@ export default function AboutPage() {
 
 
 
-
-  return (
-    <div className='w-full min-h-screen mainbg'>
-      {
-        <Modal modal={passModal} setModal={setPassModal}>
-          {
-            passError && <p className='text-red-600 text-center mb-3'>{passError}</p>
-          }
-          {
-            passwordChangedSuccessfull && <p className='text-green-600 text-center mb-3'>{passwordChangedSuccessfull}</p>
-          }
-          <form onSubmit={handleChangePassword} className='flex flex-col gap-y-5'>
-            <div>
-              <p className='text-sm mb-2 relative'>Current password:</p>
-              <input
-                required
-                value={currentPass}
-                onChange={(e) => setCurrentPass(e.target.value)}
-                type="text"
-                placeholder="type current password"
-                className="input input-success w-full"
-              />
+  if (userData.isDisabled && !userLoading) {
+    return (
+      <div className='w-full min-h-screen mainbg'>
+        <div className='flex justify-between bg-[#15db2559] p-2'>
+          <Link href="/">
+            <div className='flex gap-1 items-center text-white'>
+              <BackIcon w={30}></BackIcon>
+              <p className='text-[16px]'>Home</p>
             </div>
-
-            <div>
-              <p className='text-sm mb-2 relative'>New password:</p>
-              <input
-                required
-                value={newPass}
-                onChange={(e) => setNewPass(e.target.value)}
-                type="text"
-                placeholder="type new password"
-                className="input input-success w-full"
-              />
+          </Link>
+          <button onClick={handleLogOut} className='text-2xl text-white cursor-pointer'>
+            <div className='flex gap-1 items-center'>
+              <p className='text-[16px]'>Log out</p>
+              <LogOutIcon w={30}></LogOutIcon>
             </div>
-
-            <div className='relative'>
-              <p className='text-sm mb-2 relative'>Confirm password:</p>
-              <input
-                required
-                value={conPass}
-                onChange={(e) => setConPass(e.target.value)}
-                type="text"
-                placeholder="type confirm password"
-                className="input input-success w-full"
-              />
-            </div>
-
-            <button type='submit' className="btn mt-3 btn-success">
-              {passLoading ? "wait a moment" : "Confirm Change"}
-            </button>
-          </form>
-        </Modal>
-      }
-
-      {
-        modal && <Modal modal={modal} setModal={setModal}>
-          <div>
-            <div className='flex flex-col gap-y-3'>
-              <div className='flex justify-center'>
-                {
-                  userPhoto ? <Image className='h-30 bg-[#15db2559] w-30 md:h-40 md:w-40 border-2 border-green-500 rounded-full object-contain' src={userPhoto} alt={userName} width={200} height={200}></Image> :
-                    <div className='h-40 w-40 border-2 border-green-500 rounded-full'>
-                      <UserIcon color={"#15db2559"} w={160}></UserIcon>
-                    </div>
-                }
-                <div>
-                  <label className='cursor-pointer' htmlFor="image">
-                    <ChangeImageIcon w={40}></ChangeImageIcon>
-                  </label>
-                  <input onChange={changePhotoFn} className='hidden' id="image" type="file" name="" />
-                </div>
-              </div>
-
-              <input
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                type="text"
-                placeholder="Success"
-                className="input input-success w-full"
-              />
-
-              <input
-                value={userPhone}
-                onChange={(e) => setUserPhone(e.target.value)}
-                type="text"
-                placeholder="Success"
-                className="input input-success w-full"
-              />
-
-              <button onClick={handleUpdateData} className="btn mt-3 btn-success">
-                {updateLoading ? "wait a moment" : "Update"}
-              </button>
-            </div>
-            <hr className='my-5' />
-            <button onClick={() => {
-              setModal(false);
-              setPassModal(true);
-            }} className='link link-success'>Change password</button>
-          </div>
-        </Modal>
-      }
-
-      <div className='flex justify-between bg-[#15db2559] p-2'>
-        <Link href="/">
-          <div className='flex gap-1 items-center text-white'>
-            <BackIcon w={30}></BackIcon>
-            <p className='text-[16px]'>Home</p>
-          </div>
-        </Link>
-        <button onClick={handleLogOut} className='text-2xl text-white cursor-pointer'>
-          <div className='flex gap-1 items-center'>
-            <p className='text-[16px]'>Log out</p>
-            <LogOutIcon w={30}></LogOutIcon>
-          </div>
-        </button>
-      </div>
-
-      <div className='max-w-7xl mx-auto px-2'>
-
-        {
-          userLoading || loading ? <div className='absolute left-1/2 -translate-x-1/2'>
-            <div className="loader"></div>
-          </div> : ""
-        }
-
-        <div className='mt-10'>
-          {
-            !userLoading && !userError && userData && <div className='text-white'>
-
-              <div className='md:flex justify-between'>
-                <div className='flex gap-x-2'>
-                  <div className='relative'>
-                    {
-                      userData.photo ? <Image className='h-30 w-30 md:h-40 md:w-40 border-2 border-white rounded-full object-contain' src={userData.photo} alt={userData.name} width={200} height={200}></Image> :
-                        <div className='h-40 w-40 border-2 border-white rounded-full'>
-                          <UserIcon color='#fff' w={160}></UserIcon>
-                        </div>
-                    }
-                    <div className='absolute bottom-0 left-[80%]'>
-                      <button className='cursor-pointer' onClick={() => setModal(!modal)}>
-                        <EditIcon w={30}></EditIcon>
-                      </button>
-                    </div>
-                  </div>
-                  <div>
-                    <h1 className='text-[16px] md:text-xl mb-2'>{userData.name}</h1>
-                    <p className='text-[14px] md:text-[16px]'>{userData.id}</p>
-                    <p className='text-[14px] md:text-[16px]'>Total score: {totalScore}</p>
-                  </div>
-                </div>
-                <div className='mt-3 md:mt-0'>
-                  <pre className='text-[14px] md:text-[16px]'>Email    : {userData.email}</pre>
-                  <pre className='text-[14px] md:text-[16px]'>WhatsApp : {userData.phone}</pre>
-                  <pre className='text-[14px] md:text-[16px]'>Section  : {userData.section}</pre>
-                </div>
-              </div>
-
-              <div className='flex justify-end my-10'>
-                <div className='flex items-center gap-x-2'>
-                  <Link href="/task-submit">
-                    <button className='btn btn-success btn-sm'>Submit task</button>
-                  </Link>
-                  <Link href="/feedback">
-                    <button className='btn btn-success btn-sm'>Today's feedback</button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          }
+          </button>
         </div>
 
+        <div className='max-w-7xl mx-auto px-2 text-white'>
 
-        <div className='w-full'>
-          <div>
+          <h1 className='text-center mt-10 text-2xl font-medium'>নির্দিষ্ট সময়ে টাস্ক সাবমিট না করার কারণে তোমার প্রাফাইল ব্লক করা হয়েছে।</h1>
+          <p className='text-center mt-5'>০৮-০৩-২০২৬ তারিখ থেকে যতগুলো টাস্ক বাকি রয়েছে তত গুলোর জন্য ৫০ টকা করে জরিমানা দিয়ে প্রফাইল আনলক করে নিবা।</p>
+
+          <p className='text-center'><span className='text-yellow-500 text-xl'>01982740064</span> -  এই নাম্বারে নির্দিষ্ট পরিমাণ টাকা বিকাশে জমা দিয়ে এই নাম্বারেই WhatsApp এ যোগাযোগ করো।</p>
+
+        </div>
+
+      </div>
+    )
+  }
+  else {
+    return (
+      <div className='w-full min-h-screen mainbg'>
+        {
+          <Modal modal={passModal} setModal={setPassModal}>
             {
-              !loading && !error && data && <div
-                className='grid grid-cols-2 md:grid-cols-4 gap-1'>
-                {
-                  data.map((score: any, idx: number) => {
-                    return (
-                      <div key={idx} className='text-white border p-1 my-1'>
-                        <p>Day {score.day} : <span className='text-yellow-300 font-bold'>{score.score}</span></p>
+              passError && <p className='text-red-600 text-center mb-3'>{passError}</p>
+            }
+            {
+              passwordChangedSuccessfull && <p className='text-green-600 text-center mb-3'>{passwordChangedSuccessfull}</p>
+            }
+            <form onSubmit={handleChangePassword} className='flex flex-col gap-y-5'>
+              <div>
+                <p className='text-sm mb-2 relative'>Current password:</p>
+                <input
+                  required
+                  value={currentPass}
+                  onChange={(e) => setCurrentPass(e.target.value)}
+                  type="text"
+                  placeholder="type current password"
+                  className="input input-success w-full"
+                />
+              </div>
+
+              <div>
+                <p className='text-sm mb-2 relative'>New password:</p>
+                <input
+                  required
+                  value={newPass}
+                  onChange={(e) => setNewPass(e.target.value)}
+                  type="text"
+                  placeholder="type new password"
+                  className="input input-success w-full"
+                />
+              </div>
+
+              <div className='relative'>
+                <p className='text-sm mb-2 relative'>Confirm password:</p>
+                <input
+                  required
+                  value={conPass}
+                  onChange={(e) => setConPass(e.target.value)}
+                  type="text"
+                  placeholder="type confirm password"
+                  className="input input-success w-full"
+                />
+              </div>
+
+              <button type='submit' className="btn mt-3 btn-success">
+                {passLoading ? "wait a moment" : "Confirm Change"}
+              </button>
+            </form>
+          </Modal>
+        }
+
+        {
+          modal && <Modal modal={modal} setModal={setModal}>
+            <div>
+              <div className='flex flex-col gap-y-3'>
+                <div className='flex justify-center'>
+                  {
+                    userPhoto ? <Image className='h-30 bg-[#15db2559] w-30 md:h-40 md:w-40 border-2 border-green-500 rounded-full object-contain' src={userPhoto} alt={userName} width={200} height={200}></Image> :
+                      <div className='h-40 w-40 border-2 border-green-500 rounded-full'>
+                        <UserIcon color={"#15db2559"} w={160}></UserIcon>
                       </div>
-                    )
-                  })
-                }
+                  }
+                  <div>
+                    <label className='cursor-pointer' htmlFor="image">
+                      <ChangeImageIcon w={40}></ChangeImageIcon>
+                    </label>
+                    <input onChange={changePhotoFn} className='hidden' id="image" type="file" name="" />
+                  </div>
+                </div>
+
+                <input
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  type="text"
+                  placeholder="Success"
+                  className="input input-success w-full"
+                />
+
+                <input
+                  value={userPhone}
+                  onChange={(e) => setUserPhone(e.target.value)}
+                  type="text"
+                  placeholder="Success"
+                  className="input input-success w-full"
+                />
+
+                <button onClick={handleUpdateData} className="btn mt-3 btn-success">
+                  {updateLoading ? "wait a moment" : "Update"}
+                </button>
+              </div>
+              <hr className='my-5' />
+              <button onClick={() => {
+                setModal(false);
+                setPassModal(true);
+              }} className='link link-success'>Change password</button>
+            </div>
+          </Modal>
+        }
+
+        <div className='flex justify-between bg-[#15db2559] p-2'>
+          <Link href="/">
+            <div className='flex gap-1 items-center text-white'>
+              <BackIcon w={30}></BackIcon>
+              <p className='text-[16px]'>Home</p>
+            </div>
+          </Link>
+          <button onClick={handleLogOut} className='text-2xl text-white cursor-pointer'>
+            <div className='flex gap-1 items-center'>
+              <p className='text-[16px]'>Log out</p>
+              <LogOutIcon w={30}></LogOutIcon>
+            </div>
+          </button>
+        </div>
+
+        <div className='max-w-7xl mx-auto px-2'>
+
+          {
+            userLoading || loading ? <div className='absolute left-1/2 -translate-x-1/2'>
+              <div className="loader"></div>
+            </div> : ""
+          }
+
+          <div className='mt-10'>
+            {
+              !userLoading && !userError && userData && <div className='text-white'>
+
+                <div className='md:flex justify-between'>
+                  <div className='flex gap-x-2'>
+                    <div className='relative'>
+                      {
+                        userData.photo ? <Image className='h-30 w-30 md:h-40 md:w-40 border-2 border-white rounded-full object-contain' src={userData.photo} alt={userData.name} width={200} height={200}></Image> :
+                          <div className='h-40 w-40 border-2 border-white rounded-full'>
+                            <UserIcon color='#fff' w={160}></UserIcon>
+                          </div>
+                      }
+                      <div className='absolute bottom-0 left-[80%]'>
+                        <button className='cursor-pointer' onClick={() => setModal(!modal)}>
+                          <EditIcon w={30}></EditIcon>
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <h1 className='text-[16px] md:text-xl mb-2'>{userData.name}</h1>
+                      <p className='text-[14px] md:text-[16px]'>{userData.id}</p>
+                      <p className='text-[14px] md:text-[16px]'>Total score: {totalScore}</p>
+                    </div>
+                  </div>
+                  <div className='mt-3 md:mt-0'>
+                    <pre className='text-[14px] md:text-[16px]'>Email    : {userData.email}</pre>
+                    <pre className='text-[14px] md:text-[16px]'>WhatsApp : {userData.phone}</pre>
+                    <pre className='text-[14px] md:text-[16px]'>Section  : {userData.section}</pre>
+                  </div>
+                </div>
+
+                <div className='flex justify-end my-10'>
+                  <div className='flex items-center gap-x-2'>
+                    <Link href="/task-submit">
+                      <button className='btn btn-success btn-sm'>Submit task</button>
+                    </Link>
+                    <Link href="/feedback">
+                      <button className='btn btn-success btn-sm'>Today's feedback</button>
+                    </Link>
+                  </div>
+                </div>
               </div>
             }
           </div>
-        </div>
 
+
+          <div className='w-full'>
+            <div>
+              {
+                !loading && !error && data && <div
+                  className='grid grid-cols-2 md:grid-cols-4 gap-1'>
+                  {
+                    data.map((score: any, idx: number) => {
+                      return (
+                        <div key={idx} className='text-white border p-1 my-1'>
+                          <p>Day {score.day} : <span className='text-yellow-300 font-bold'>{score.score}</span></p>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
+
+
 }

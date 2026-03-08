@@ -78,7 +78,7 @@ export default function RegisterPage() {
                         />
                     </div>
                     <div>
-                        <button type='submit' className="btn btn-success w-full">Register</button>
+                        <button disabled type='submit' className="btn btn-success w-full">Register</button>
                     </div>
                     <Link className='text-orange-500 text-sm underline' href="/login">Log In</Link>
                 </form>

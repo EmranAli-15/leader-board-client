@@ -31,7 +31,8 @@ export class HelixFetch {
 
 export const Helix = new HelixFetch(
     {
-        baseURL: "http://localhost:5000/api",
+        // baseURL: "http://localhost:5000/api",
+        baseURL: "https://leader-board-server-omega.vercel.app/api",
         setToken() {
             const token = Cookies.get("auth");
             if (token) return token;

@@ -3,7 +3,6 @@
 import { useAuthContext } from '@/contextApi/AuthContext';
 import { Helix } from '@/helixFetch/helixFetch';
 import { BackIcon } from '@/ui/Icons';
-import { error } from 'console';
 import moment from 'moment';
 import Link from 'next/link';
 import { useEffect, useState } from 'react'
@@ -53,11 +52,11 @@ export default function page() {
         const date = Date.now();
 
         const time = moment(date).format('MMMM Do YYYY, h:mm:ss a');
-        console.log({
-            userId: user?.userId,
-            solution,
-            time
-        });
+        // console.log({
+        //     userId: user?.userId,
+        //     solution,
+        //     time
+        // });
 
         const data = {
             userId: user?.userId,

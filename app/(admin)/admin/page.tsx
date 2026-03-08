@@ -25,6 +25,8 @@ export default function page() {
         router.push("/");
     };
 
+
+    // Getting all user data
     useEffect(() => {
         const fn = async () => {
             const { success, result } = await Helix.query("/getAllUser");
@@ -37,6 +39,31 @@ export default function page() {
 
         fn();
     }, []);
+    // Getting all user data end
+
+
+
+
+    // Updating user status
+    const [statusLoading, setStatusLoading] = useState(false);
+    const [statusError, setStatusError] = useState("");
+    const handleUpdateStatus = async ({ userId, status }: { userId: string, status: boolean }) => {
+        setStatusLoading(true);
+        setStatusError("")
+        const data = { userId, status }
+
+        const { success } = await Helix.mutation({
+            url: "/updateUserStatus",
+            method: "PATCH",
+            data: data
+        });
+
+        if (success) {
+            setStatusLoading(false);
+        } else {
+            setStatusError("Error")
+        }
+    }
 
     return (
         <div className='w-full min-h-screen mainbg'>
@@ -65,6 +92,7 @@ export default function page() {
                                 <th>Photo</th>
                                 <th>View</th>
                                 <th>Update mark</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,6 +113,14 @@ export default function page() {
                                                 <Link href={`/admin-edit/${user._id}`}>
                                                     <button className='btn btn-xs btn-warning'>Update</button>
                                                 </Link>
+                                            </td>
+                                            <td className='text-center'>
+                                                <button
+                                                    onClick={() => handleUpdateStatus({ userId: user._id, status: !user.isDisabled })}
+                                                    className='btn btn-xs btn-primany'>
+                                                    {user.isDisabled ? <span className='text-red-500'>Blocked</span> : <span className='text-green-500'>Regular</span>}
+                                                    {statusLoading ? " wait" : statusError ? statusError : ""}
+                                                </button>
                                             </td>
                                         </tr>
                                     )
