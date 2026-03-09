@@ -192,7 +192,7 @@ export default function AboutPage() {
         <div className='max-w-7xl mx-auto px-2 text-white'>
 
           <h1 className='text-center mt-10 text-2xl font-medium'>নির্দিষ্ট সময়ে টাস্ক সাবমিট না করার কারণে তোমার প্রাফাইল ব্লক করা হয়েছে।</h1>
-          <p className='text-center mt-5'>০৮-০৩-২০২৬ তারিখ থেকে যতগুলো টাস্ক বাকি রয়েছে তত গুলোর জন্য ৫০ টকা করে জরিমানা দিয়ে প্রফাইল আনলক করে নিবা।</p>
+          <p className='text-center mt-5'>০৮-০৩-২০২৬ তারিখ থেকে যতগুলো টাস্ক জমা দেয়া বাকি রয়েছে <i>(আজকের চলমান টাস্ক বাদে)</i> তত গুলোর জন্য ৫০ টকা করে জরিমানা দিয়ে প্রফাইল আনলক করে নিবা।</p>
 
           <p className='text-center'><span className='text-yellow-500 text-xl'>01982740064</span> -  এই নাম্বারে নির্দিষ্ট পরিমাণ টাকা বিকাশে জমা দিয়ে এই নাম্বারেই WhatsApp এ যোগাযোগ করো।</p>
 
