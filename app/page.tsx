@@ -17,6 +17,7 @@ export default function page() {
   useEffect(() => {
     const fn = async () => {
       const res = await Helix.query("/getAllTotalScore");
+      console.log(res)
       if (res.success) {
         setData(res.result.data);
         setLoading(false);
