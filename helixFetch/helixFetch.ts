@@ -51,9 +51,31 @@ export class HelixFetch {
     async mutation({ url, data, method }: { url: string, data?: any, method: "PATCH" | "PUT" | "DELETE" | "POST" }) {
         const fullurl = `${this.baseURL}${url}`;
 
-        const mutation = new HelixMutation(this, fullurl, this.token?.(), method, data);
-        const result = await mutation.mutation();
-        return result;
+        try {
+            const response = await fetch(fullurl, {
+                method: method,
+                headers: {
+                    'Authorization': this.token?.() as any,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) throw new Error(result.message)
+
+            this.cached[fullurl] = result;
+            return {
+                success: true,
+                result
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                error
+            };
+        }
     }
 };
 
